@@ -1,0 +1,6 @@
+@BT.Web.Implementation_HostAddress = http://localhost:5135
+
+GET {{BT.Web.Implementation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
