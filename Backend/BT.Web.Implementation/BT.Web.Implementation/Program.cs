@@ -2,6 +2,7 @@ using BT.Implementation.Providers.ADO;
 using BT.Implementation.Providers.Interfaces;
 using BT.Implementation.Services;
 using BT.Interfaces.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +15,14 @@ builder.Services.AddOpenApi();
 // Register database
 builder.Services.AddSingleton<DatabaseConnection>();
 
-// Register providers
-builder.Services.AddScoped<IBugProvider, BugProvider>();
-builder.Services.AddScoped<IAuthProvider, AuthProvider>();
+//Add DependencyInjection
+builder.Services.AddImplementation();
 
-// Register services
-builder.Services.AddScoped<IBugService, BugService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+// Add Serilog configuration
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
+
 
 // Add CORS for Angular frontend
 builder.Services.AddCors(options =>

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BT.Web.Implementation.Controllers
 {
     [ApiController]
-    [Route("api/bugs")]
+    [Route("bugs")]
     public class BugController : ControllerBase
     {
         private readonly IBugService _bugService;

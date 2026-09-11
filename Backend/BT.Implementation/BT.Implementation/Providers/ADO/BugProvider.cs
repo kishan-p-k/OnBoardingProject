@@ -48,7 +48,7 @@ namespace BT.Implementation.Providers.ADO
                 {
                     Bug bug = new Bug
                     {
-                        BugId = Convert.ToInt32(reader["bug_id"]),
+                        Reference_id = reader["reference_id"].ToString()!,
                         Title = reader["title"].ToString()!,
 
                         Description = reader["description"] == DBNull.Value
@@ -58,11 +58,11 @@ namespace BT.Implementation.Providers.ADO
                         Priority = reader["priority"].ToString()!,
                         Status = reader["status"].ToString()!,
 
-                        CreatedBy = Convert.ToInt32(reader["created_by"]),
+                        CreatedBy = reader["created_by"].ToString()!,
 
                         Assignee = reader["assignee"] == DBNull.Value
                             ? null
-                            : Convert.ToInt32(reader["assignee"]),
+                            : reader["assignee"].ToString(),
 
                         CreatedDate = Convert.ToDateTime(
                             reader["created_date"])

@@ -1,12 +1,12 @@
 using BT.Models;
 using BT.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-
+using BT.Web.Interfaces.Controllers;
 namespace BT.Web.Implementation.Controllers
 {
     [ApiController]
     [Route("api/userauth")]
-    public class AuthController : ControllerBase
+    public class AuthController : ControllerBase,IAuthController
     {
         private readonly IAuthService _authService;
         private readonly ILogger<AuthController> _logger;
