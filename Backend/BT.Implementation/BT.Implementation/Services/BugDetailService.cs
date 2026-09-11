@@ -1,0 +1,48 @@
+using BT.Models;
+using BT.Interfaces.Services;
+using BT.Implementation.Providers.Interfaces;
+using Microsoft.Extensions.Logging;
+
+namespace BT.Implementation.Services
+{
+    public class BugDetailService : IBugDetailService
+    {
+        private readonly IBugDetailProvider _bugDetailProvider;
+        private readonly ILogger<BugDetailService> _logger;
+
+        public BugDetailService(
+            IBugDetailProvider bugDetailProvider,
+            ILogger<BugDetailService> logger)
+        {
+            _bugDetailProvider = bugDetailProvider;
+            _logger = logger;
+        }
+    public Bug? GetBugById(string ref_id)
+    {
+        _logger.LogInformation(
+            "Fetching bug with ID {ref_id}.", ref_id);
+        try
+        {
+            Bug? bug = _bugDetailProvider.GetBugById(ref_id);
+            if (bug == null)
+            {
+                _logger.LogWarning(
+                    "No bug found with ID {ref_id}.", ref_id);
+            }
+            else
+            {
+                _logger.LogInformation(
+                    "Successfully fetched bug with ID {ref_id}.", ref_id);
+            }
+            return bug;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to fetch bug with ID {ref_id}.", ref_id);
+            throw;
+        }
+    }
+  }
+}

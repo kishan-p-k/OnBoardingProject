@@ -4,20 +4,25 @@ using BT.Implementation.Providers.ADO;
 using BT.Implementation.Services;
 using BT.Interfaces.Services;
 
-
-public static class DependencyInjection
+namespace BT.Implementation.Providers.ADO
 {
-    public static IServiceCollection AddImplementation(
-        this IServiceCollection services)
+
+    public static class DependencyInjection
     {
-        // Register providers
-        services.AddScoped<IBugProvider, BugProvider>();
-        services.AddScoped<IAuthProvider, AuthProvider>();
+        public static IServiceCollection AddImplementation(
+            this IServiceCollection services)
+        {
+            // Register providers
+            services.AddScoped<IBugProvider, BugProvider>();
+            services.AddScoped<IAuthProvider, AuthProvider>();
+            services.AddScoped<IBugDetailProvider, BugDetailProvider>();
 
-        // Register services
-        services.AddScoped<IBugService, BugService>();
-        services.AddScoped<IAuthService, AuthService>();
+            // Register services
+            services.AddScoped<IBugService, BugService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IBugDetailService, BugDetailService>();
 
-        return services;
+            return services;
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace BT.Web.Implementation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllBugs()
+        public List<Bug> GetAllBugs()
         {
             _logger.LogInformation(
                 "GET request received for all bugs.");
@@ -33,7 +33,7 @@ namespace BT.Web.Implementation.Controllers
                     "Returning {BugCount} bugs to the client.",
                     bugs.Count);
 
-                return Ok(bugs);
+                return bugs;
             }
             catch (Exception ex)
             {
@@ -41,9 +41,7 @@ namespace BT.Web.Implementation.Controllers
                     ex,
                     "Unexpected error while processing GET /api/bugs.");
 
-                return StatusCode(
-                    StatusCodes.Status500InternalServerError,
-                    "An unexpected error occurred.");
+                return new List<Bug>();
             }
         }
     }

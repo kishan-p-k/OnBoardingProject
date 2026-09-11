@@ -3,7 +3,8 @@ using BT.Models;
 
 namespace BT.Web.Interfaces.Controllers;
 
-public interface IBugController
+public interface IBugDetailController
 {
-    List<Bug> GetAllBugs();
+	Bug? GetBugById(string ref_id);
 }
+

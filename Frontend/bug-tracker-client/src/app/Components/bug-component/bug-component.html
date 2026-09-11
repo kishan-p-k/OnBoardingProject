@@ -1,0 +1,67 @@
+@if (bug$ | async; as bug) {
+
+<div class="jira-page">
+
+  <h1>{{ bug.title }}</h1>
+
+  <div class="bug-layout">
+
+    <!-- Left side -->
+    <div class="bug-main">
+
+      <section class="description">
+        <h3>Description</h3>
+        <p>{{ bug.description }}</p>
+      </section>
+
+      <section class="activity">
+        <h3>Activity</h3>
+      </section>
+
+    </div>
+
+
+    <!-- Right side -->
+    <aside class="bug-sidebar">
+
+      <div class="sidebar-section">
+        <label>Status</label>
+        <div class="status open">
+          {{ bug.status }}
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <label>Priority</label>
+        <div class="priority high">
+          {{ bug.priority }}
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <label>Assignee</label>
+        <div class="user">
+          {{ bug.assignee }}
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <label>Reporter</label>
+        <div class="user">
+          {{ bug.createdBy }}
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <label>Created</label>
+        <div>
+          {{ bug.createdDate | date:'MMM d, y, h:mm a' }}
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+</div>
+}
