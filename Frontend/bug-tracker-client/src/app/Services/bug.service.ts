@@ -20,7 +20,7 @@ export class BugService {
 
   getById(ref_id: string): Observable<Bug> {
     return this.http
-      .get<Bug>(`http://localhost:5135/bugs/${ref_id}`)
+      .get<Bug>(`http://localhost:5135/bug/${ref_id}`)
       .pipe(
         tap((bug: Bug) => {
           console.log('GetBug By ref_id response:', bug);

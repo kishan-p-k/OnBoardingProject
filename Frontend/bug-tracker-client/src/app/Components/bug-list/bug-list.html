@@ -40,7 +40,7 @@
   @if (bugs.length > 0) {
   <div class="bug-grid">
     @for (bug of bugs; track bug.reference_id) {
-    <a class="bug-component" [routerLink]="['bug',bug.reference_id]">
+    <a class="bug-component" [routerLink]="[bug.reference_id]">
       {{ bug.title }}
     </a>
     }
