@@ -95,5 +95,60 @@ namespace BT.Implementation.Providers.ADO
                 throw;
             }
         }
+        public bool DeleteBug(string ref_id)
+        {
+            _logger.LogInformation(
+                "Starting database operation to delete bug with ID {ref_id}.",
+                ref_id);
+
+            try
+            {
+                using SqlConnection connection =
+                    _databaseConnection.CreateConnection();
+
+                using SqlCommand command =
+                    new SqlCommand("DeleteBug", connection);
+
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(
+                    "@RefId",
+                    SqlDbType.UniqueIdentifier
+                ).Value = Guid.Parse(ref_id);
+
+                connection.Open();
+
+                _logger.LogDebug(
+                    "Database connection opened. Executing stored procedure {ProcedureName}.",
+                    "DeleteBug");
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                {
+                    _logger.LogInformation(
+                        "No bug found with ID {ref_id}.",
+                        ref_id);
+
+                    return false;
+                }
+
+                _logger.LogInformation(
+                    "Successfully deleted bug with ID {ref_id}.",
+                    ref_id);
+
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "Database error while deleting bug with ID {ref_id}.",
+                    ref_id);
+
+                throw;
+            }
+        }
+
     }
 }

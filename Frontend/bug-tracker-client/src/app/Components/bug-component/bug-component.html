@@ -3,6 +3,8 @@
 <div class="jira-page">
 
   <h1>{{ bug.title }}</h1>
+  <div class="edit"><button>Edit</button></div>
+  <div class="Delete"><button (click) ="deleteBug(bug.reference_id)">Delete</button></div>
 
   <div class="bug-layout">
 
@@ -11,6 +13,7 @@
 
       <section class="description">
         <h3>Description</h3>
+        <h3>{{bug.reference_id}}</h3>
         <p>{{ bug.description }}</p>
       </section>
 

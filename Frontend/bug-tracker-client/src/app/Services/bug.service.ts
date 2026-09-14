@@ -2,13 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 export interface Bug {
-  bugId: number;
+  reference_id: string;
   title: string;
   description: string;
   priority: string;
   status: string;
-  createdBy: number;
-  assignee: number;
+  createdBy: string;
+  assignee: string;
   createdDate: Date;
 }
 
@@ -26,5 +26,9 @@ export class BugService {
           console.log('GetBug By ref_id response:', bug);
         })
       );
+  }
+  deleteBug(ref_id: string): Observable<any> {
+    console.log("Reference id ", {ref_id});
+    return this.http.delete(`http://localhost:5135/bug/${ref_id}`);
   }
 }
