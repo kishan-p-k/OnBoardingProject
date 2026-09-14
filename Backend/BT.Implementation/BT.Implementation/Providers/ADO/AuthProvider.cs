@@ -18,11 +18,11 @@ namespace BT.Implementation.Providers.ADO
             _logger = logger;
         }
 
-        public Users? GetUserForLogin(string UsernameOrMail)
+        public Users? GetUserForLogin(string Mail)
         {
             _logger.LogInformation(
                 "Starting database operation to Authenticate User.");
-            // Implementation for retrieving a user by username or email
+            // Implementation for retrieving a user by username
             try
             {
                 using (var connection = _databaseConnection.CreateConnection())
@@ -33,10 +33,10 @@ namespace BT.Implementation.Providers.ADO
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add(
-                    "@UsernameOrMail",
+                    "@Mail",
                     SqlDbType.VarChar,
                     100
-                ).Value = UsernameOrMail;
+                ).Value = Mail;
 
                     connection.Open();
                     _logger.LogDebug(
@@ -48,7 +48,7 @@ namespace BT.Implementation.Providers.ADO
                     {
                         user = new Users
                         {
-                            UserId = Convert.ToInt32(reader["user_id"]),
+                            Reference_id = reader["reference_id"].ToString(),
                             Username = reader["username"].ToString(),
                             Password = reader["password"].ToString(),
                             Mail = reader["mail"].ToString()

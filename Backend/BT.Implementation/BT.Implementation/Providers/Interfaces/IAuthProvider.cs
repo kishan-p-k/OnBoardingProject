@@ -4,6 +4,6 @@ namespace BT.Implementation.Providers.Interfaces
 {
     public interface IAuthProvider
     {
-        public Users? GetUserForLogin(string usernameOrMail);
+        public Users? GetUserForLogin(string Mail);
     }
 }
