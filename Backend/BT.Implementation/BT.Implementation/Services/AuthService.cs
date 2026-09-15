@@ -45,8 +45,8 @@ namespace BT.Implementation.Services
                 }
 
                 _logger.LogInformation(
-                    "Successfully authenticated user {UserId}.",
-                    user.UserId);
+                    "Successfully authenticated user {Reference_id}.",
+                    user.Reference_id);
 
                 return user;
             }

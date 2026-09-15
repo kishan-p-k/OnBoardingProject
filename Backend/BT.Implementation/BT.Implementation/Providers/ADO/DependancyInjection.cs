@@ -16,12 +16,13 @@ namespace BT.Implementation.Providers.ADO
             services.AddScoped<IBugProvider, BugProvider>();
             services.AddScoped<IAuthProvider, AuthProvider>();
             services.AddScoped<IBugDetailProvider, BugDetailProvider>();
+            services.AddScoped<IUserBugsProvider, UserBugsProvider>();
 
             // Register services
             services.AddScoped<IBugService, BugService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IBugDetailService, BugDetailService>();
-
+            services.AddScoped<IUserBugsService, UserBugsService>();
             return services;
         }
     }

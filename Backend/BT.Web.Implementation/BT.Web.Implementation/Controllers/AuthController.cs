@@ -18,15 +18,15 @@ namespace BT.Web.Implementation.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{usernameOrMail}/{password}")]
-        public IActionResult Login(string usernameOrMail, string password)
+        [HttpGet("{Mail}/{password}")]
+        public IActionResult Login(string Mail, string password)
         {
             _logger.LogInformation(
                 "GET request received for user login.");
 
             try
             {
-                Users? user = _authService.GetUserForLogin(usernameOrMail, password);
+                Users? user = _authService.GetUserForLogin(Mail, password);
 
                 if (user == null)
                 {
@@ -36,14 +36,14 @@ namespace BT.Web.Implementation.Controllers
                 // Return user without password for security
                 var userResponse = new
                 {
-                    user.UserId,
+                    user.Reference_id,
                     user.Username,
                     user.Mail
                 };
 
                 _logger.LogInformation(
-                    "Successfully authenticated user {UserId}.",
-                    user.UserId);
+                    "Successfully authenticated user {Reference_id}.",
+                    user.Reference_id);
 
                 return Ok(userResponse);
             }
@@ -51,8 +51,8 @@ namespace BT.Web.Implementation.Controllers
             {
                 _logger.LogError(
                     ex,
-                    "Unexpected error while processing GET /api/userauth/{usernameOrMail}.",
-                    usernameOrMail);
+                    "Unexpected error while processing GET /userauth/{Mail}.",
+                    Mail);
 
                 return StatusCode(
                     StatusCodes.Status500InternalServerError,

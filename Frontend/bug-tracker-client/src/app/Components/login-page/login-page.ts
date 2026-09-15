@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, shareReplay, tap } from 'rxjs/operators';
 import { LoginPageService, User } from '../../Services/login-page-service';
@@ -30,7 +31,7 @@ export class LoginPage {
   user$: Observable<User | null> | null = null;
   errorMessage = '';
 
-  constructor(private readonly loginService: LoginPageService) { }
+  constructor(private readonly loginService: LoginPageService, private readonly router: Router) { }
 
   login() {
     if (this.loginForm.invalid) return;
@@ -42,7 +43,9 @@ export class LoginPage {
     this.user$ = this.loginService.login(email, password).pipe(
       tap((user) => {
         console.log('Login successful:', user);
+        this.router.navigate(['/userbugs', user?.reference_id]);
       }),
+      
       catchError((error) => {
         console.error('Login error:', error);
         this.errorMessage = 'Failed to login. Please check your credentials.';
