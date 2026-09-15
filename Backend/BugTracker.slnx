@@ -1,14 +1,6 @@
 <Solution>
-  <Folder Name="/BT.Implementation/">
-    <Project Path="BT.Implementation/BT.Implementation/BT.Implementation.csproj" />
-  </Folder>
-  <Folder Name="/BT.Web.Implementation/">
-    <Project Path="BT.Web.Implementation/BT.Web.Implementation/BT.Web.Implementation.csproj" />
-  </Folder>
-  <Folder Name="/BT.Web/">
-    <Project Path="BT.Web/BT.Web/BT.Web.csproj" />
-  </Folder>
-  <Folder Name="/BT/">
-    <Project Path="BT/BT/BT.csproj" />
-  </Folder>
+  <Project Path="BT.Implementation/BT.Implementation.csproj" />
+  <Project Path="BT.Web.Implementation/BT.Web.Implementation.csproj" />
+  <Project Path="BT.Web/BT.Web.csproj" />
+  <Project Path="BT/BT.csproj" />
 </Solution>

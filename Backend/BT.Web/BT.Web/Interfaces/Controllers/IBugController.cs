@@ -1,9 +1,0 @@
-using Microsoft.AspNetCore.Mvc;
-using BT.Models;
-
-namespace BT.Web.Interfaces.Controllers;
-
-public interface IBugController
-{
-    List<Bug> GetAllBugs();
-}
