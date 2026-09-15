@@ -43,5 +43,51 @@ namespace BT.Web.Implementation.Controllers
 				return null;
 			}
 		}
-	}
+        [HttpDelete("{ref_id}")]
+        public IActionResult DeleteBug(string ref_id)
+        {
+            _logger.LogInformation(
+                "DELETE request received for bug with ID {ref_id}.",
+                ref_id);
+
+            try
+            {
+                bool deleted = _bugDetailService.DeleteBug(ref_id);
+
+                if (!deleted)
+                {
+                    _logger.LogWarning(
+                        "Bug with ID {ref_id} was not found.",
+                        ref_id);
+
+                    return NotFound(new
+                    {
+                        message = "Bug not found."
+                    });
+                }
+
+                _logger.LogInformation(
+                    "Successfully deleted bug with ID {ref_id}.",
+                    ref_id);
+
+                return Ok(new
+                {
+                    message = "Bug deleted successfully."
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "Unexpected error while processing DELETE bug/{ref_id}.",
+                    ref_id);
+
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while deleting the bug."
+                });
+            }
+        }
+
+    }
 }

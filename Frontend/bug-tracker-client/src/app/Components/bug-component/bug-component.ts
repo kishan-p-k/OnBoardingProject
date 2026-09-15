@@ -1,11 +1,11 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { BugService } from '../../Services/bug.service';
 
 export interface Bug {
-  bugId: number;
+  reference_id: string;
   title: string;
   description: string;
   priority: string;
@@ -25,7 +25,28 @@ export interface Bug {
 export class BugComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly bugService = inject(BugService);
+  private readonly router = inject(Router);
 
+
+  deleteBug(ref_id: string): void {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this bug?'
+    );
+
+    if (!confirmed) {
+      return;
+    }
+    console.log("Component refid", { ref_id });
+    this.bugService.deleteBug(ref_id).subscribe({
+      next: () => {
+        this.router.navigate(['/bug']);
+      },
+      error: error => {
+        console.error(error);
+        window.alert('Failed to delete bug.');
+      }
+    });
+  }
   bug$ = this.route.paramMap.pipe(
     switchMap(params => {
       const ref_id = params.get('ref_id');
