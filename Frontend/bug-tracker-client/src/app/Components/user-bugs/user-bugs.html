@@ -1,6 +1,14 @@
 <section class="bug-list-container">
-  <h1>Your Bugs</h1>
+  <div class="bug-actions">
+    <button (click)="ViewAllBugs()">All Bugs</button>
+    <button (click)="AddBugs()">New Bug</button>
+  </div>
 
+  <h1>Hello, {{user?.username}}</h1>
+  <div class="bug-filter">
+    <h2>Your Bugs</h2>
+    
+  </div>
   @if (errorMessage) {
   <p>{{ errorMessage }}</p>
   }
@@ -10,42 +18,19 @@
   @if (bugs.length === 0 && !errorMessage) {
   <p>No bugs found.</p>
   }
+  @if
+  (bugs.length > 0)
+  {
 
-  <!-- @if (bugs.length > 0) {
-   <table >
-     <thead>
-       <tr>
-         <th>Id</th>
-         <th>Title</th>
-         <th>Status</th>
-         <th>Priority</th>
-         <th>Created By</th>
-         <th>Assignee</th>
-       </tr>
-     </thead>
-
-     <tbody>
-       @for (bug of bugs; track bug.bugId) {
-       <tr>
-         <td>{{ bug.bugId ?? '-' }}</td>
-         <td><b>{{ bug.title ?? '-' }}</b><br/>{{ bug.description ?? '-' }}</td>
-         <td>{{ bug.status ?? '-' }}</td>
-         <td>{{ bug.priority ?? '-' }}</td>
-         <td>{{ bug.createdBy ?? '-' }}</td>
-         <td>{{ bug.assignee ?? '-' }}</td>
-       </tr>
-       }
-     </tbody>
-   </table>-->
-  @if (bugs.length > 0) {
   <div class="bug-grid">
     @for (bug of bugs; track bug.reference_id) {
-    <a class="bug-component"[routerLink]="['/bug', bug.reference_id]">
+    <a class="bug-component" [routerLink]="['/bug', bug.reference_id]">
       {{ bug.title }}
     </a>
     }
   </div>
   }
+
 
   }
 </section>

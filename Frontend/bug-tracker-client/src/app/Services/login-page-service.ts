@@ -13,10 +13,30 @@ export interface User {
 })
 export class LoginPageService {
   private readonly apiUrl = 'http://localhost:5135/api/userauth';
-
+  private currentUser: User | null = null;
   constructor(private readonly http: HttpClient) { }
 
-  login(usernameOrMail: string, password: string): Observable<User | null> {
+  setCurrentUser(user: User | null): void {
+    this.currentUser = user;
+    if (user)
+    {
+      sessionStorage.setItem('currentUser', JSON.stringify(user));
+    }
+  }
+  getCurrentUser(): User | null {
+    if (this.currentUser) {
+      return this.currentUser;
+    }
+    const storedUser = sessionStorage.getItem('currentUser');
+    if (storedUser) {
+      this.currentUser = JSON.parse(storedUser);
+      return this.currentUser;
+    }
+    return null;
+  }
+
+  login(usernameOrMail: string, password: string): Observable<User | null>
+  {
     return this.http.get<User | null>(`${this.apiUrl}/${usernameOrMail}/${password}`);
   }
 }

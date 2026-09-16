@@ -20,7 +20,7 @@ export class LoginPage {
   ]);
   password = new FormControl('', [
     Validators.required,
-    Validators.minLength(6)
+    Validators.minLength(8)
   ]);
   loginForm = new FormGroup({
     email: this.email,
@@ -43,6 +43,9 @@ export class LoginPage {
     this.user$ = this.loginService.login(email, password).pipe(
       tap((user) => {
         console.log('Login successful:', user);
+
+        this.loginService.setCurrentUser(user);
+
         this.router.navigate(['/userbugs', user?.reference_id]);
       }),
       
