@@ -85,11 +85,13 @@
       </section>
 
 
-      <!-- ACTIVITY -->
+      <!-- Comments -->
       <section class="activity">
-        <h3>Activity</h3>
+        <h3>Comments</h3>
+        <button>Add new Comment</button>
+        <app-comment-component [bugRefId]="bug.reference_id">
+        </app-comment-component>
       </section>
-
     </div>
 
 
