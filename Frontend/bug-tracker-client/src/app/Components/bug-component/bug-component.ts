@@ -1,9 +1,9 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { merge, Subject, switchMap } from 'rxjs';
 import { BugService } from '../../Services/bug.service';
-
+import { FormsModule } from '@angular/forms'
 export interface Bug {
   reference_id: string;
   title: string;
@@ -18,7 +18,7 @@ export interface Bug {
 @Component({
   selector: 'app-bug-component',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, DatePipe],
+  imports: [AsyncPipe, RouterLink, DatePipe, FormsModule],
   templateUrl: './bug-component.html',
   styleUrl: './bug-component.css',
 })
@@ -27,6 +27,10 @@ export class BugComponent {
   private readonly bugService = inject(BugService);
   private readonly router = inject(Router);
 
+  editingField: string | null = null;
+  editedValue = '';
+
+  private readonly updatedBug$ = new Subject<Bug>();
 
   deleteBug(ref_id: string): void {
     const confirmed = window.confirm(
@@ -36,7 +40,9 @@ export class BugComponent {
     if (!confirmed) {
       return;
     }
-    console.log("Component refid", { ref_id });
+
+    console.log('Component refid', { ref_id });
+
     this.bugService.deleteBug(ref_id).subscribe({
       next: () => {
         this.router.navigate(['/bug']);
@@ -47,15 +53,70 @@ export class BugComponent {
       }
     });
   }
-  bug$ = this.route.paramMap.pipe(
-    switchMap(params => {
-      const ref_id = params.get('ref_id');
 
-      if (!ref_id) {
-        throw new Error('Ref ID is missing from the route');
+  fieldChanged(event: Event, ref_id: string, bugField: string): void {
+    const bugValue = (
+      event.target as HTMLInputElement | HTMLSelectElement
+    ).value;
+
+    this.bugService.updateBugField(
+      ref_id,
+      bugField,
+      bugValue
+    ).subscribe({
+      next: updatedBug => {
+        console.log('Updated bug:', updatedBug);
+        this.updatedBug$.next(updatedBug);
+
+        this.editingField = null;
+        this.editedValue = '';
+      },
+      error: error => {
+        console.error(error);
+        window.alert('Failed to update bug.');
       }
+    });
+  }
 
-      return this.bugService.getById(ref_id);
-    })
+  startEditing(field: string, value: string): void {
+    this.editingField = field;
+    this.editedValue = value;
+  }
+
+  saveField(ref_id: string): void {
+    if (!this.editingField) {
+      return;
+    }
+
+    const field = this.editingField;
+    const value = this.editedValue;
+
+    const event = {
+      target: {
+        value: value
+      }
+    } as unknown as Event;
+
+    this.fieldChanged(event, ref_id, field);
+  }
+
+  cancelEdit(): void {
+    this.editingField = null;
+    this.editedValue = '';
+  }
+
+  bug$ = merge(
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const ref_id = params.get('ref_id');
+
+        if (!ref_id) {
+          throw new Error('Ref ID is missing from the route');
+        }
+
+        return this.bugService.getById(ref_id);
+      })
+    ),
+    this.updatedBug$
   );
 }

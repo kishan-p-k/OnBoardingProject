@@ -17,33 +17,35 @@ public class BugDetailService : IBugDetailService
         _bugDetailProvider = bugDetailProvider;
         _logger = logger;
     }
-public Bug? GetBugById(string ref_id)
-{
-    _logger.LogInformation(
-        "Fetching bug with ID {ref_id}.", ref_id);
-    try
+    public Bug? GetBugById(string ref_id)
     {
-        Bug? bug = _bugDetailProvider.GetBugById(ref_id);
-        if (bug == null)
+        _logger.LogInformation(
+            "Fetching bug with ID {ref_id}.", ref_id);
+        try
         {
-            _logger.LogWarning(
-                "No bug found with ID {ref_id}.", ref_id);
+            Bug? bug = _bugDetailProvider.GetBugById(ref_id);
+            if (bug == null)
+            {
+                _logger.LogWarning(
+                    "No bug found with ID {ref_id}.", ref_id);
+            }
+            else
+            {
+                _logger.LogInformation(
+                    "Successfully fetched bug with ID {ref_id}.", ref_id);
+            }
+            return bug;
         }
-        else
+        catch (Exception ex)
         {
-            _logger.LogInformation(
-                "Successfully fetched bug with ID {ref_id}.", ref_id);
+            _logger.LogError(
+                ex,
+                "Failed to fetch bug with ID {ref_id}.", ref_id);
+            throw;
         }
-        return bug;
     }
-    catch (Exception ex)
-    {
-        _logger.LogError(
-            ex,
-            "Failed to fetch bug with ID {ref_id}.", ref_id);
-        throw;
-    }
-}
+
+
     public bool DeleteBug(string ref_id)
     {
         _logger.LogInformation(
@@ -70,4 +72,34 @@ public Bug? GetBugById(string ref_id)
             throw;
         }
     }
+
+        public Bug? UpdateBugField(string ref_id, string bugField, string bugValue)
+        {
+            _logger.LogInformation(
+                "Updating bug with ID {ref_id}.", ref_id);
+            try
+            {
+                Bug? bug = _bugDetailProvider.UpdateBugField(ref_id,bugField,bugValue);
+                if (bug == null)
+                {
+                    _logger.LogWarning(
+                        "No bug found with ID {ref_id}.", ref_id);
+                }
+                else
+                {
+                    _logger.LogInformation(
+                        "Successfully updated bug with ID {ref_id}.", ref_id);
+                }
+                return bug;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "Failed to fetch bug with ID {ref_id}.", ref_id);
+                throw;
+            }
+        }
+
+
 }
