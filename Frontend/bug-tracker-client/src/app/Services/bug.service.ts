@@ -31,4 +31,20 @@ export class BugService {
     console.log("Reference id ", {ref_id});
     return this.http.delete(`http://localhost:5135/bug/${ref_id}`);
   }
-}
+  updateBugField(
+    ref_id: string,
+    bugField: string,
+    bugValue: string
+  ): Observable<Bug> {
+
+    const body = {
+      bugField: bugField,
+      bugValue: bugValue
+    };
+
+    return this.http.put<Bug>(
+      `http://localhost:5135/bug/${ref_id}`,
+      body
+    );
+  }
+  }

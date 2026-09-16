@@ -2,21 +2,90 @@
 
 <div class="jira-page">
 
-  <h1>{{ bug.title }}</h1>
-  <div class="edit"><button>Edit</button></div>
-  <div class="Delete"><button (click) ="deleteBug(bug.reference_id)">Delete</button></div>
+  <!-- TITLE -->
+  <div class="title-section">
+
+    <div class="title-area">
+      @if (editingField === 'title') {
+
+      <input type="text"
+             [(ngModel)]="editedValue"
+             (keyup.enter)="saveField(bug.reference_id)" />
+
+      <button type="button"
+              (click)="saveField(bug.reference_id)">
+        ✓
+      </button>
+
+      <button type="button"
+              (click)="cancelEdit()">
+        ✕
+      </button>
+
+      } @else {
+
+      <h1>{{ bug.title }}</h1>
+
+      <button type="button"
+              (click)="startEditing('title', bug.title)">
+        ✎
+      </button>
+
+      }
+    </div>
+
+    <button class="delete-button"
+            type="button"
+            (click)="deleteBug(bug.reference_id)">
+      Delete
+    </button>
+
+  </div>
 
   <div class="bug-layout">
 
-    <!-- Left side -->
     <div class="bug-main">
 
+      <!-- DESCRIPTION -->
       <section class="description">
-        <h3>Description</h3>
-        <h3>{{bug.reference_id}}</h3>
+
+        <div class="field-header">
+          <h3>Description</h3>
+
+          @if (editingField !== 'description') {
+          <button type="button"
+                  (click)="startEditing('description', bug.description)">
+            ✎
+          </button>
+          }
+        </div>
+
+
+        @if (editingField === 'description') {
+
+        <textarea [(ngModel)]="editedValue"
+                  (keydown.control.enter)="saveField(bug.reference_id)"></textarea>
+
+        <button type="button"
+                (click)="saveField(bug.reference_id)">
+          ✓
+        </button>
+
+        <button type="button"
+                (click)="cancelEdit()">
+          ✕
+        </button>
+
+        } @else {
+
         <p>{{ bug.description }}</p>
+
+        }
+
       </section>
 
+
+      <!-- ACTIVITY -->
       <section class="activity">
         <h3>Activity</h3>
       </section>
@@ -24,39 +93,60 @@
     </div>
 
 
-    <!-- Right side -->
+    <!-- SIDEBAR -->
     <aside class="bug-sidebar">
 
       <div class="sidebar-section">
         <label>Status</label>
-        <div class="status open">
-          {{ bug.status }}
-        </div>
+
+        <select [value]="bug.status"
+                (change)="fieldChanged($event, bug.reference_id, 'status')">
+
+          <option value="Open">Open</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+
+        </select>
       </div>
+
 
       <div class="sidebar-section">
         <label>Priority</label>
-        <div class="priority high">
-          {{ bug.priority }}
-        </div>
+
+        <select [value]="bug.priority"
+                (change)="fieldChanged($event, bug.reference_id, 'priority')">
+
+          <option value="Low">Low</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Critical">Critical</option>
+
+        </select>
       </div>
+
 
       <div class="sidebar-section">
         <label>Assignee</label>
+
         <div class="user">
           {{ bug.assignee }}
         </div>
       </div>
 
+
       <div class="sidebar-section">
         <label>Reporter</label>
+
         <div class="user">
           {{ bug.createdBy }}
         </div>
       </div>
 
+
       <div class="sidebar-section">
         <label>Created</label>
+
         <div>
           {{ bug.createdDate | date:'MMM d, y, h:mm a' }}
         </div>
@@ -67,4 +157,5 @@
   </div>
 
 </div>
+
 }

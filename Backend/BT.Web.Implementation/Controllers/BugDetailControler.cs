@@ -4,45 +4,47 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BT.Web.Implementation.Controllers;
 
-	[ApiController]
-	[Route("bug")]
-	public class BugDetailsController : ControllerBase
-	{
-		private readonly IBugDetailService _bugDetailService;
-		private readonly ILogger<BugDetailsController> _logger;
+[ApiController]
+[Route("bug")]
+public class BugDetailsController : ControllerBase
+{
+    private readonly IBugDetailService _bugDetailService;
+    private readonly ILogger<BugDetailsController> _logger;
 
-		public BugDetailsController(
-			IBugDetailService bugDetailService,
-			ILogger<BugDetailsController> logger)
-		{
-			_bugDetailService = bugDetailService;
-			_logger = logger;
-		}
+    public BugDetailsController(
+        IBugDetailService bugDetailService,
+        ILogger<BugDetailsController> logger)
+    {
+        _bugDetailService = bugDetailService;
+        _logger = logger;
+    }
 
-		[HttpGet("{ref_id}")]
-		public Bug? GetBugById(string ref_id)
-		{
-			_logger.LogInformation(
-				"GET request received for bug with ID {ref_id}.", ref_id);
+    [HttpGet("{ref_id}")]
+    public Bug? GetBugById(string ref_id)
+    {
+        _logger.LogInformation(
+            "GET request received for bug with ID {ref_id}.", ref_id);
 
-			try
-			{
-				Bug? bug = _bugDetailService.GetBugById(ref_id);
+        try
+        {
+            Bug? bug = _bugDetailService.GetBugById(ref_id);
 
-				_logger.LogInformation(
-					"Returning bug with ID {ref_id} to the client.", ref_id);
+            _logger.LogInformation(
+                "Returning bug with ID {ref_id} to the client.", ref_id);
 
-				return bug;
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(
-					ex,
-					"Unexpected error while processing GET bug/{ref_id}.", ref_id);
+            return bug;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error while processing GET bug/{ref_id}.", ref_id);
 
-				return null;
-			}
-		}
+            return null;
+        }
+    }
+
+
     [HttpDelete("{ref_id}")]
     public IActionResult DeleteBug(string ref_id)
     {
@@ -89,4 +91,32 @@ namespace BT.Web.Implementation.Controllers;
         }
     }
 
+
+    [HttpPut("{ref_id}")]
+    public Bug? UpdateBugField(string ref_id, [FromBody] UpdateBugField update)
+    {
+        _logger.LogInformation(
+            "PUT request received for bug with ID {ref_id}.", ref_id);
+
+        try
+        {
+            Bug? bug = _bugDetailService.UpdateBugField(
+                ref_id,
+                update.BugField,
+                update.BugValue);
+
+            _logger.LogInformation(
+                "Returning updated bug with ID {ref_id} to the client.", ref_id);
+
+            return bug;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error while processing PUT bug/{ref_id}.", ref_id);
+
+            return null;
+        }
+    }
 }
