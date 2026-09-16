@@ -62,3 +62,9 @@ pre {
     color: #000000;
     text-decoration: none;
   }
+.bug-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
