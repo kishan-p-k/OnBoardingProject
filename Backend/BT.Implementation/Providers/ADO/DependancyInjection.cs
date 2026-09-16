@@ -17,12 +17,14 @@ public static class DependencyInjection
         services.AddScoped<IAuthProvider, AuthProvider>();
         services.AddScoped<IBugDetailProvider, BugDetailProvider>();
         services.AddScoped<IUserBugsProvider, UserBugsProvider>();
+        services.AddScoped<ICommentProvider, CommentProvider>();
 
         // Register services
         services.AddScoped<IBugService, BugService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IBugDetailService, BugDetailService>();
         services.AddScoped<IUserBugsService, UserBugsService>();
+        services.AddScoped<ICommentService, CommentService>();
         return services;
     }
 }

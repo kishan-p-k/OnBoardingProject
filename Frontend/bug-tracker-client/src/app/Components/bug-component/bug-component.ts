@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { merge, Subject, switchMap } from 'rxjs';
 import { BugService } from '../../Services/bug.service';
 import { FormsModule } from '@angular/forms'
+import { CommentComponent } from '../comment-component/comment-component'
 export interface Bug {
   reference_id: string;
   title: string;
@@ -18,7 +19,7 @@ export interface Bug {
 @Component({
   selector: 'app-bug-component',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, DatePipe, FormsModule],
+  imports: [AsyncPipe, RouterLink, DatePipe, FormsModule, CommentComponent],
   templateUrl: './bug-component.html',
   styleUrl: './bug-component.css',
 })
