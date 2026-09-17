@@ -1,17 +1,19 @@
 <section class="bug-list-container">
-  <h1>All Bugs</h1>
+  <app-navigation></app-navigation>
+    <h1>All Bugs</h1>
+    <app-filter-box (filterChanged)="applyFilter($event)">
+    </app-filter-box>
+    @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+    }
 
-  @if (errorMessage) {
-  <p>{{ errorMessage }}</p>
-  }
+    @if (bugs$ | async; as bugs) {
 
-  @if (bugs$ | async; as bugs) {
+    @if (bugs.length === 0 && !errorMessage) {
+    <p>No bugs found.</p>
+    }
 
-  @if (bugs.length === 0 && !errorMessage) {
-  <p>No bugs found.</p>
-  }
-
-  <!-- @if (bugs.length > 0) {
+    <!-- @if (bugs.length > 0) {
    <table >
      <thead>
        <tr>
@@ -37,15 +39,15 @@
        }
      </tbody>
    </table>-->
-  @if (bugs.length > 0) {
-  <div class="bug-grid">
-    @for (bug of bugs; track bug.reference_id) {
-    <a class="bug-component" [routerLink]="[bug.reference_id]">
-      {{ bug.title }}
-    </a>
+    @if (bugs.length > 0) {
+    <div class="bug-grid">
+      @for (bug of bugs; track bug.reference_id) {
+      <a class="bug-component" [routerLink]="[bug.reference_id]">
+        {{ bug.title }}
+      </a>
+      }
+    </div>
     }
-  </div>
-  }
 
-  }
+    }
 </section>

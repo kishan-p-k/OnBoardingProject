@@ -5,5 +5,5 @@ namespace BT;
 public interface IBugService
 {
     public List<Bug> GetAllBugs();
-    //public Bug CreateBug(Bug newBug);
+    public List<Bug> FilterBugs(BugFilter filter);
 }

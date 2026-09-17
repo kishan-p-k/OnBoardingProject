@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommentComponent } from './comment-component';
+import { FilterBox } from './filter-box';
 
-describe('CommentComponent', () => {
-  let component: CommentComponent;
-  let fixture: ComponentFixture<CommentComponent>;
+describe('FilterBox', () => {
+  let component: FilterBox;
+  let fixture: ComponentFixture<FilterBox>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommentComponent],
+      imports: [FilterBox],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CommentComponent);
+    fixture = TestBed.createComponent(FilterBox);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
