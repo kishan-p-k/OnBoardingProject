@@ -41,26 +41,5 @@ namespace BT.Implementation.Services
                 throw;
             }
         }
-        public List<Bug> FilterBugs(BugFilter filter)
-        {
-            _logger.LogInformation(
-                "Filtering bugs with criteria: {@Filter}.", filter);
-            try
-            {
-                List<Bug> filteredBugs = _bugProvider.FilterBugs(filter);
-                _logger.LogInformation(
-                    "Successfully filtered bugs. Count: {Count}.",
-                    filteredBugs.Count);
-
-                return filteredBugs;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(
-                    ex,
-                    "Failed to filter bugs with criteria: {@Filter}.", filter);
-                throw;
-            }
-        }
     }
 }

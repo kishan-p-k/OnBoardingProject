@@ -22,8 +22,6 @@ import {
 } from 'rxjs';
 
 import { BugService } from '../../Services/bug.service';
-import { FormsModule } from '@angular/forms'
-import { Navigation } from '../navigation/navigation';
 import { UserService } from '../../Services/user.service';
 
 import {
@@ -50,7 +48,6 @@ export interface Bug {
 @Component({
   selector: 'app-bug-component',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, DatePipe, FormsModule,Navigation],
 
   imports: [
     AsyncPipe,
@@ -62,7 +59,7 @@ export interface Bug {
   ],
 
   templateUrl: './bug-component.html',
-  styleUrls: ['./bug-component.css'],
+  styleUrl: './bug-component.css',
 })
 export class BugComponent {
 
