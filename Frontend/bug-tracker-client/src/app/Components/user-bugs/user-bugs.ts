@@ -6,11 +6,12 @@ import { AsyncPipe } from '@angular/common';
 import { RouterLink,ActivatedRoute,Router } from '@angular/router';
 import { LoginPageService } from '../../Services/login-page-service';
 import { User } from '../../Services/user.service';
+import { Navigation } from '../navigation/navigation';
 
 @Component({
   selector: 'app-user-bugs',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, CommonModule],
+  imports: [AsyncPipe, RouterLink, CommonModule, Navigation],
   templateUrl: './user-bugs.html',
   styleUrls: ['./user-bugs.css']
 })
@@ -45,7 +46,7 @@ export class UserBugsComponent implements OnInit {
   }
   AddBugs() {
     console.log("New Bug Button clicked");
-    // this.router.navigate(['/bug/add']);
+     //this.router.navigate(['/bug/create']);
   }
 }
 

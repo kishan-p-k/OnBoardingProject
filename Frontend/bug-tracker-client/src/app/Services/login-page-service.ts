@@ -39,4 +39,8 @@ export class LoginPageService {
   {
     return this.http.get<User | null>(`${this.apiUrl}/${usernameOrMail}/${password}`);
   }
+  logout() {
+    sessionStorage.removeItem('currentUser');
+    this.currentUser = null;
+  }
 }
