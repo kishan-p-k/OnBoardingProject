@@ -1,5 +1,4 @@
 <section class="bug-list-container">
-  <app-navigation></app-navigation>
   <div class="bug-actions">
     <button (click)="ViewAllBugs()">All Bugs</button>
     <button (click)="AddBugs()">New Bug</button>
@@ -8,7 +7,7 @@
   <h1>Hello, {{user?.username}}</h1>
   <div class="bug-filter">
     <h2>Your Bugs</h2>
-
+    
   </div>
   @if (errorMessage) {
   <p>{{ errorMessage }}</p>
@@ -31,5 +30,7 @@
     }
   </div>
   }
+
+
   }
 </section>

@@ -19,9 +19,18 @@ export interface Bug {
 @Component({
   selector: 'app-bug-component',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, DatePipe, FormsModule,Navigation],
+
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    DatePipe,
+    FormsModule,
+    CommentComponent,
+    ReactiveFormsModule
+  ],
+
   templateUrl: './bug-component.html',
-  styleUrls: ['./bug-component.css'],
+  styleUrl: './bug-component.css',
 })
 export class BugComponent {
   private readonly route = inject(ActivatedRoute);
