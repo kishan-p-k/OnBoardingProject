@@ -1,7 +1,8 @@
 .jira-page {
-  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
   margin: 0 auto;
-  padding: 40px;
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px);
 }
 
 /* =========================
@@ -12,15 +13,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
+  gap: clamp(10px, 2vw, 20px);
+  margin-bottom: clamp(18px, 2vw, 24px);
 }
 
 
 .title-area {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: clamp(5px, 0.7vw, 8px);
   flex: 1;
   min-width: 0;
 }
@@ -29,18 +30,20 @@
     flex: 1;
     width: auto;
     max-width: none;
-    padding: 8px 10px;
-    font-size: 24px;
+    padding: 0.5em 0.65em;
+    font-size: clamp(18px, 2vw, 24px);
     font-weight: 600;
     color: #172b4d;
     border: 1px solid #4c9aff;
     border-radius: 4px;
     outline: none;
+    box-sizing: border-box;
   }
 
     .title-area input:focus {
       border-color: #2684ff;
     }
+
 
   /* =========================
    EDIT BUTTONS
@@ -52,8 +55,8 @@
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 18px;
-    padding: 4px 7px;
+    font-size: clamp(15px, 1.5vw, 18px);
+    padding: 0.2em 0.4em;
     border-radius: 4px;
   }
 
@@ -63,23 +66,26 @@
       background: #ebecf0;
     }
 
+
 /* =========================
    DELETE
    ========================= */
 
 .delete-button {
-  padding: 7px 14px;
+  padding: 0.5em 1em;
   border: none;
   border-radius: 4px;
   background: transparent;
   color: #bf2600;
   cursor: pointer;
-  font-size: 14px;
+  font-size: clamp(12px, 1vw, 14px);
+  white-space: nowrap;
 }
 
   .delete-button:hover {
     background: #ffebe6;
   }
+
 
 /* =========================
    MAIN LAYOUT
@@ -87,10 +93,15 @@
 
 .bug-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 32px;
+  /*
+    Sidebar scales with viewport.
+    It will never become too narrow or too wide.
+  */
+  grid-template-columns: minmax(0, 1fr) clamp(240px, 25vw, 300px);
+  gap: clamp(20px, 2.5vw, 32px);
   align-items: start;
 }
+
 
 /* =========================
    LEFT SIDE
@@ -100,14 +111,22 @@
   min-width: 0;
 }
 
+
+/* =========================
+   DESCRIPTION / ACTIVITY
+   ========================= */
+
 .description,
 .activity {
+  width: 100%;
+  box-sizing: border-box;
   background: white;
   border: 1px solid #dfe1e6;
   border-radius: 6px;
-  padding: 24px;
-  margin-bottom: 20px;
+  padding: clamp(16px, 2vw, 24px);
+  margin-bottom: clamp(16px, 2vw, 20px);
 }
+
 
 /* =========================
    DESCRIPTION
@@ -117,57 +136,49 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: clamp(10px, 1.3vw, 16px);
 }
 
 .description h3,
 .activity h3 {
   margin: 0;
-  font-size: 16px;
+  font-size: clamp(14px, 1.3vw, 16px);
   color: #172b4d;
 }
 
-.description {
-  background: white;
-  border: 1px solid #dfe1e6;
-  border-radius: 6px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
+
+.description textarea {
+  display: block;
   width: 100%;
+  min-height: clamp(120px, 18vh, 180px);
+  box-sizing: border-box;
+  padding: 0.7em;
+  resize: vertical;
+  font-family: inherit;
+  font-size: clamp(13px, 1vw, 14px);
+  line-height: 1.6;
+  color: #172b4d;
+  border: 1px solid #4c9aff;
+  border-radius: 4px;
+  outline: none;
+  margin: 0;
 }
 
-  .description textarea {
-    display: block;
-    width: 100%;
-    min-height: 140px;
-    box-sizing: border-box;
-    padding: 10px;
-    resize: vertical;
-    font-family: inherit;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #172b4d;
-    border: 1px solid #4c9aff;
-    border-radius: 4px;
-    outline: none;
-    margin: 0;
+  .description textarea:focus {
+    border-color: #2684ff;
   }
 
-    .description textarea:focus {
-      border-color: #2684ff;
-    }
 
 /* =========================
    SIDEBAR
    ========================= */
 
 .bug-sidebar {
+  width: 100%;
   background: white;
   border: 1px solid #dfe1e6;
   border-radius: 6px;
-  padding: 8px 20px;
-  width: 300px;
+  padding: 0 clamp(14px, 1.7vw, 20px);
   box-sizing: border-box;
 }
 
@@ -175,8 +186,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 15px;
-  padding: 15px 0;
+  gap: clamp(8px, 1.2vw, 15px);
+  padding: clamp(11px, 1.3vw, 15px) 0;
   border-bottom: 1px solid #ebecf0;
 }
 
@@ -186,26 +197,30 @@
 
   .sidebar-section label {
     color: #6b778c;
-    font-size: 13px;
+    font-size: clamp(11px, 1vw, 13px);
     font-weight: 600;
+    flex-shrink: 0;
   }
 
   .sidebar-section > div {
     color: #172b4d;
-    font-size: 14px;
+    font-size: clamp(12px, 1vw, 14px);
     text-align: right;
+    min-width: 0;
   }
+
 
   /* =========================
    DROPDOWNS
    ========================= */
 
   .sidebar-section select {
-    padding: 6px 4px;
+    max-width: 65%;
+    padding: 0.4em 0.3em;
     border: none;
     background: transparent;
     color: #172b4d;
-    font-size: 14px;
+    font-size: clamp(12px, 1vw, 14px);
     cursor: pointer;
     outline: none;
   }
@@ -214,14 +229,15 @@
       outline: none;
     }
 
+
 /* =========================
    STATUS
    ========================= */
 
 .status {
-  padding: 5px 10px;
+  padding: 0.4em 0.7em;
   border-radius: 4px;
-  font-size: 12px !important;
+  font-size: clamp(10px, 0.9vw, 12px) !important;
   font-weight: 600;
 }
 
@@ -230,14 +246,15 @@
     color: #0747a6 !important;
   }
 
+
 /* =========================
    PRIORITY
    ========================= */
 
 .priority {
-  padding: 5px 10px;
+  padding: 0.4em 0.7em;
   border-radius: 4px;
-  font-size: 12px !important;
+  font-size: clamp(10px, 0.9vw, 12px) !important;
   font-weight: 600;
 }
 
@@ -246,37 +263,155 @@
     color: #bf2600 !important;
   }
 
+
+/* =========================
+   ASSIGNEE
+   ========================= */
+
+/* Keeps username + edit button on same line */
+
+.sidebar-section .user {
+  display: inline-block;
+  max-width: 75%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+  .sidebar-section .user + button {
+    display: inline-block;
+    margin-left: 0.3em;
+    padding: 0.2em 0.4em;
+    vertical-align: middle;
+  }
+
+
+/* =========================
+   USER SEARCH
+   ========================= */
+
+.sidebar-section input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0.5em 0.6em;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  font-size: clamp(12px, 1vw, 14px);
+  outline: none;
+}
+
+  .sidebar-section input:focus {
+    border-color: #2684ff;
+  }
+
+
+/* =========================
+   USER DROPDOWN
+   ========================= */
+
+.user-option {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6em 0.7em;
+  border-bottom: 1px solid #ebecf0;
+  background: white;
+  color: #172b4d;
+  font-size: clamp(12px, 1vw, 14px);
+  cursor: pointer;
+}
+
+  .user-option:hover {
+    background: #deebff;
+  }
+
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+
+  .jira-page {
+    width: 94%;
+  }
+
+  .bug-layout {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 20px;
+  }
+
+  .bug-sidebar {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+
 /* =========================
    MOBILE
    ========================= */
 
-@media (max-width: 800px) {
+@media (max-width: 650px) {
+
   .jira-page {
-    padding: 20px;
+    width: 94%;
+    padding: 20px 0;
   }
 
   .title-section {
-    align-items: flex-start;
+    flex-wrap: wrap;
   }
 
   .title-area {
-    min-width: 0;
+    width: 100%;
+    flex-basis: 100%;
   }
 
-    .title-area h1 {
-      font-size: 24px;
-    }
-
-    .title-area input {
-      width: 100%;
-      font-size: 20px;
-    }
+  .delete-button {
+    margin-left: auto;
+  }
 
   .bug-layout {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .bug-sidebar {
     width: 100%;
+  }
+
+  .description,
+  .activity {
+    padding: 18px;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
+
+@media (max-width: 400px) {
+
+  .jira-page {
+    width: 96%;
+  }
+
+  .title-section {
+    gap: 12px;
+  }
+
+  .title-area h1 {
+    font-size: 20px;
+  }
+
+  .description,
+  .activity {
+    padding: 14px;
+  }
+
+  .sidebar-section {
+    gap: 8px;
   }
 }

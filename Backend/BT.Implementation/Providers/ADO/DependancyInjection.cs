@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<IBugDetailProvider, BugDetailProvider>();
         services.AddScoped<IUserBugsProvider, UserBugsProvider>();
         services.AddScoped<ICommentProvider, CommentProvider>();
+        services.AddScoped<IUserProvider, UserProvider>();
 
         // Register services
         services.AddScoped<IBugService, BugService>();
@@ -25,6 +26,8 @@ public static class DependencyInjection
         services.AddScoped<IBugDetailService, BugDetailService>();
         services.AddScoped<IUserBugsService, UserBugsService>();
         services.AddScoped<ICommentService, CommentService>();
+        services.AddScoped<IUserService, UserService>();
+        
         return services;
     }
 }
