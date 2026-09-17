@@ -103,7 +103,7 @@ public class BugProvider : IBugProvider
             command.Parameters.AddWithValue("@Status", (object?)filter.Status ?? DBNull.Value);
             command.Parameters.AddWithValue("@Priority", (object?)filter.Priority ?? DBNull.Value);
             command.Parameters.AddWithValue("@Assignee", (object?)filter.Assignee ?? DBNull.Value);
-            command.Parameters.AddWithValue("@Created_by", (object?)filter.CreatedBy ?? DBNull.Value);
+            command.Parameters.AddWithValue("@CreatedBy", (object?)filter.CreatedBy ?? DBNull.Value);
             connection.Open();
             _logger.LogDebug(
                 "Database connection opened. Executing stored procedure {ProcedureName}.",
