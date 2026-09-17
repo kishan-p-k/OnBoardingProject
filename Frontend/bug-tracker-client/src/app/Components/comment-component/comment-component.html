@@ -1,0 +1,15 @@
+@if (comments$ | async; as comments) {
+  @for (comment of comments; track comment.reference_id) {
+<div class="comment">
+  <div class="comment-content">
+    <small>
+      {{ comment.author === currentUser ? 'You' : comment.author }}
+    </small>    <p>{{ comment.comment }}</p>
+  </div>
+
+  <small class="comment-date">
+    {{ comment.date | date:'dd MMM yyyy, hh:mm a' }}
+  </small>
+</div>
+  }
+}
