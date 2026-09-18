@@ -42,6 +42,7 @@
 
   </div>
 
+
   <div class="bug-layout">
 
     <div class="bug-main">
@@ -64,7 +65,8 @@
         @if (editingField === 'description') {
 
         <textarea [(ngModel)]="editedValue"
-                  (keydown.control.enter)="saveField(bug.reference_id)"></textarea>
+                  (keydown.control.enter)="saveField(bug.reference_id)">
+</textarea>
 
         <button type="button"
                 (click)="saveField(bug.reference_id)">
@@ -85,9 +87,16 @@
       </section>
 
 
-      <!-- ACTIVITY -->
+      <!-- COMMENTS -->
       <section class="activity">
-        <h3>Activity</h3>
+
+        <h3>Comments</h3>
+
+        <button>Add new Comment</button>
+
+        <app-comment-component [bugRefId]="bug.reference_id">
+        </app-comment-component>
+
       </section>
 
     </div>
@@ -96,7 +105,9 @@
     <!-- SIDEBAR -->
     <aside class="bug-sidebar">
 
+      <!-- STATUS -->
       <div class="sidebar-section">
+
         <label>Status</label>
 
         <select [value]="bug.status"
@@ -108,48 +119,109 @@
           <option value="Closed">Closed</option>
 
         </select>
+
       </div>
 
 
+      <!-- PRIORITY -->
       <div class="sidebar-section">
+
         <label>Priority</label>
 
         <select [value]="bug.priority"
                 (change)="fieldChanged($event, bug.reference_id, 'priority')">
 
           <option value="Low">Low</option>
-          <option value="High">High</option>
           <option value="Medium">Medium</option>
+          <option value="High">High</option>
           <option value="Critical">Critical</option>
 
         </select>
+
       </div>
 
 
+      <!-- ASSIGNEE -->
       <div class="sidebar-section">
+
         <label>Assignee</label>
+
+        @if (editingField === 'assignee') {
+
+        <div class="assignee-search">
+
+          <input type="text"
+                 [formControl]="assigneeControl"
+                 placeholder="Search user..."
+                 (focus)="showAssigneeDropdown = true">
+
+
+          @if (showAssigneeDropdown) {
+
+          <div class="assignee-dropdown">
+
+            @if (assigneeValue$ | async; as users) {
+
+            @if (users.length > 0) {
+
+            @for (user of users; track user) {
+
+            <div class="user-option"
+                 (click)="selectAssignee(user, bug.reference_id)">
+              {{ user }}
+            </div>
+
+            }
+
+            } @else {
+
+            <p>No users found</p>
+
+            }
+
+            }
+
+          </div>
+
+          }
+
+        </div>
+
+        } @else {
 
         <div class="user">
           {{ bug.assignee }}
         </div>
+
+        <button type="button"
+                (click)="startEditing('assignee', bug.assignee)">
+          ✎
+        </button>
+
+        }
+
       </div>
-
-
+      <!-- REPORTER -->
       <div class="sidebar-section">
+
         <label>Reporter</label>
 
         <div class="user">
           {{ bug.createdBy }}
         </div>
+
       </div>
 
 
+      <!-- CREATED -->
       <div class="sidebar-section">
+
         <label>Created</label>
 
         <div>
           {{ bug.createdDate | date:'MMM d, y, h:mm a' }}
         </div>
+
       </div>
 
     </aside>

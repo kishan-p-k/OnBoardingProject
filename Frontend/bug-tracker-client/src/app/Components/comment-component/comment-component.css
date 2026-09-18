@@ -1,0 +1,25 @@
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+  .comment-content p {
+    margin: 0 0 6px 0;
+  }
+
+  .comment-content small {
+    color: #666;
+  }
+
+.comment-date {
+  margin-left: 20px;
+  white-space: nowrap;
+  color: #777;
+}
