@@ -24,4 +24,26 @@ export class CommentService {
         })
       );
   }
+  // updateComment(reference_id: string, updatedComment: string): Observable<Comment> {
+  //   return this.http
+  //     .put<Comment>(`http:localhost:5135/comment/${reference_id}`,updatedComment)
+  //     .pipe(
+  //       tap((comment: Comment) => {
+  //         console.log('UpdateComment response:', comment);
+  //       })
+  //     );
+  // }
+
+  updateComment(reference_id: string, updatedComment: string): Observable<Comment> {
+    return this.http
+      .put<Comment>(
+        `http://localhost:5135/comment/${reference_id}`,
+        { comment: updatedComment }
+      )
+      .pipe(
+        tap((comment: Comment) => {
+          console.log('UpdateComment response:', comment);
+        })
+      );
+  }
 }

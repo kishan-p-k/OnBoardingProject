@@ -4,12 +4,44 @@
   <div class="comment-content">
     <small>
       {{ comment.author === currentUser ? 'You' : comment.author }}
-    </small>    <p>{{ comment.comment }}</p>
-  </div>
+    </small>
+    <p>
+      @if(editingCommentId === comment.reference_id)
+      {
+      <textarea
+             [(ngModel)]="editedValue"
+              rows="3"
+             autofocus>
+      </textarea>
+      <button type="button"
+              (click)="saveComment(comment)">
+        ✓
+      </button>
 
-  <small class="comment-date">
-    {{ comment.date | date:'dd MMM yyyy, hh:mm a' }}
-  </small>
+      <button type="button"
+              (click)="cancelEdit()">
+        ✕
+      </button>
+      }
+      @else
+      {
+        {{ comment.comment }}
+      }
+    </p>
+  </div>
+  <div class="comment-meta">
+    <small class="comment-date">
+      {{ comment.date | date:'dd MMM yyyy, hh:mm a' }}
+    </small>
+    
+    @if (comment.author === currentUser) {
+    <button type="button"
+            class="edit-button"
+            (click)="editComment(comment)">
+      ✎
+    </button>
+    }
+  </div>
 </div>
   }
 }

@@ -5,5 +5,6 @@ namespace BT.Web;
 
 public interface ICommentController
 {
-    List<Comment> GetCommentByBug();
+    List<Comment> GetCommentByBug(string ref_id);
+    Comment UpdateComment(string reference_id, Comment comment);
 }

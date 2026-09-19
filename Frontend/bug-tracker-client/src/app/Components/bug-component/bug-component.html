@@ -90,9 +90,10 @@
       <!-- COMMENTS -->
       <section class="activity">
 
-        <h3>Comments</h3>
-
-        <button>Add new Comment</button>
+        <div class="comments-header">
+          <h3>Comments</h3>
+          <button>Add new Comment</button>
+        </div>
 
         <app-comment-component [bugRefId]="bug.reference_id">
         </app-comment-component>

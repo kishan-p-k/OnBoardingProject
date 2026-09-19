@@ -6,7 +6,7 @@ namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
 [Route("comment")]
-public class CommentController : ControllerBase
+public class CommentController : ControllerBase, ICommentController
 {
     private readonly ICommentService _commentService;
     private readonly ILogger<CommentController> _logger;
@@ -42,6 +42,45 @@ public class CommentController : ControllerBase
                 "Unexpected error while processing GET /api/comments/refid.");
 
             return new List<Comment>();
+        }
+    }
+
+    [HttpPut("{reference_id}")]
+    public Comment UpdateComment(
+    [FromRoute] string reference_id,
+    [FromBody] Comment comment)
+    {
+        _logger.LogInformation(
+            "Starting comment update for Reference ID: {ReferenceId}",
+            reference_id);
+
+        try
+        {
+            _logger.LogDebug(
+                "Received comment update request for Reference ID: {ReferenceId}",
+                reference_id);
+            Console.WriteLine($"Received comment update request for Reference ID: {reference_id}");
+
+            Comment updatedComment = _commentService.UpdateComment(
+                reference_id,
+                comment.comment);
+
+            _logger.LogInformation(
+                "Successfully updated comment with Reference ID: {ReferenceId}",
+                reference_id);
+
+            Console.WriteLine($"Successfully updated comment with Reference ID: {reference_id}");
+
+            return updatedComment;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Error updating comment with Reference ID: {ReferenceId}",
+                reference_id);
+
+            throw;
         }
     }
 }
