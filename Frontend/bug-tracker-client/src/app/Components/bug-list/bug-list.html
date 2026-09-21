@@ -40,13 +40,22 @@
      </tbody>
    </table>-->
     @if (bugs.length > 0) {
-    <div class="bug-grid">
-      @for (bug of bugs; track bug.reference_id) {
-      <a class="bug-component" [routerLink]="[bug.reference_id]">
-        {{ bug.title }}
-      </a>
-      }
-    </div>
+<div class="bug-grid">
+  @for (bug of bugs; track bug.reference_id) {
+  <!--<a class="bug-component" [routerLink]="[bug.reference_id]">
+    @for (part of highlightKeyword(bug.title); track $index) {
+    @if (part.toLowerCase() === keyword.toLowerCase()) {
+    <b>{{ part }}</b>
+    } @else {
+    {{ part }}
+    }
+    }
+  </a>-->
+  <a class="bug-component" [routerLink]="[bug.reference_id]">
+    {{ bug.title }}
+  </a>
+  }
+</div>
     }
 
     }

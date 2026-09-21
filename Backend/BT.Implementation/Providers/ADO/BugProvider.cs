@@ -99,7 +99,7 @@ public class BugProvider : IBugProvider
                 new SqlCommand("GetFilteredBugs", connection);
             command.CommandType = CommandType.StoredProcedure;
             // Add parameters for filtering
-            //command.Parameters.AddWithValue("@Title", (object?)filter.Title ?? DBNull.Value);
+            command.Parameters.AddWithValue("@Keyword", (object?)filter.Keyword ?? DBNull.Value);
             command.Parameters.AddWithValue("@Status", (object?)filter.Status ?? DBNull.Value);
             command.Parameters.AddWithValue("@Priority", (object?)filter.Priority ?? DBNull.Value);
             command.Parameters.AddWithValue("@Assignee", (object?)filter.Assignee ?? DBNull.Value);

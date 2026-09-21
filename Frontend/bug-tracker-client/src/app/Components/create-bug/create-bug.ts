@@ -27,6 +27,7 @@ export class CreateBugComponent {
   private readonly loginService = inject(LoginPageService);
   private readonly userService = inject(UserService);
   private readonly elementRef = inject(ElementRef);
+  private user = this.loginService.getCurrentUser();
 
   bugForm: FormGroup;
   errorMessage = signal('');
@@ -124,6 +125,7 @@ export class CreateBugComponent {
   }
 
   onCancel(): void {
-    this.router.navigate(['/bug']);
+    this.router.navigate(['/userbugs', this.user?.reference_id]);
   }
 }
+1

@@ -1,6 +1,6 @@
 <div class="bug-toolbar">
 
-  <select [(ngModel)]="filter.status">
+  <select [(ngModel)]="filter.status" (change)="applyFilter()">
     <option value="">Statuses</option>
     <option value="Open">Open</option>
     <option value="In Progress">In Progress</option>
@@ -8,7 +8,7 @@
     <option value="Resolved">Resolved</option>
   </select>
 
-  <select [(ngModel)]="filter.priority">
+  <select [(ngModel)]="filter.priority" (change)="applyFilter()">
     <option value="">Priorities</option>
     <option value="Low">Low</option>
     <option value="Medium">Medium</option>
@@ -16,7 +16,10 @@
     <option value="Critical">Critical</option>
   </select>
 
-  <button (click)="applyFilter()">Apply</button>
+  <input type="text"
+         [formControl]="keywordControl"
+         placeholder="Search title or description" />
+
 
   <button (click)="clearFilter()">Clear</button>
 

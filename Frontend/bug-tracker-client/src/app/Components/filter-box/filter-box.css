@@ -2,69 +2,82 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
-  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 25px;
+  box-sizing: border-box;
 }
 
+  .bug-toolbar select,
+  .bug-toolbar input,
+  .bug-toolbar button {
+    height: 42px;
+    box-sizing: border-box;
+    font-size: 15px;
+    border-radius: 6px;
+  }
+
+  /* Dropdowns */
   .bug-toolbar select {
     min-width: 150px;
-    padding: 9px 12px;
-    border: 2px solid #94a3b8;
-    border-radius: 6px;
-    background-color: #ffffff;
-    color: #374151;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    outline: none;
+    padding: 0 12px;
   }
 
-    .bug-toolbar select option {
-      font-weight: 700;
-    }
+  /* Search */
+  .bug-toolbar input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0 14px;
+  }
 
-    .bug-toolbar select:focus {
-      border-color: #64748b;
-    }
-
+  /* Clear button */
   .bug-toolbar button {
-    padding: 9px 18px;
-    border: 2px solid #c2b9b9;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    background-color: #f8fafc;
-    color: #374151;
-    font-size: 14px;
-    font-weight: 600;
+    padding: 0 20px;
+    border: none;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    white-space: nowrap;
   }
 
-    .bug-toolbar button:first-of-type {
-      margin-left: auto;
+/* Tablet */
+@media (max-width: 900px) {
+  .bug-toolbar {
+    flex-wrap: wrap;
+  }
+
+    .bug-toolbar select {
+      flex: 1;
+      min-width: 140px;
     }
 
-    .bug-toolbar button:hover {
-      background-color: #e2e8f0;
+    .bug-toolbar input {
+      flex: 1 1 100%;
+      order: 3;
     }
 
-    .bug-toolbar button:active {
-      background-color: #cbd5e1;
+    .bug-toolbar button {
+      order: 4;
     }
+}
 
+/* Mobile */
 @media (max-width: 600px) {
   .bug-toolbar {
-    align-items: stretch;
     flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
 
     .bug-toolbar select,
+    .bug-toolbar input,
     .bug-toolbar button {
       width: 100%;
+      min-width: 0;
     }
 
-      .bug-toolbar button:first-of-type {
-        margin-left: 0;
-      }
+    .bug-toolbar input {
+      order: unset;
+    }
+
+    .bug-toolbar button {
+      order: unset;
+    }
 }

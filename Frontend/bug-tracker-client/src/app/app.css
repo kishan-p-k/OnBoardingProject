@@ -16,6 +16,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px);
   padding: 1rem 0;
 }
 
@@ -23,5 +26,6 @@ body {
   margin: 0;
   padding: 0;
 }
+
 
 

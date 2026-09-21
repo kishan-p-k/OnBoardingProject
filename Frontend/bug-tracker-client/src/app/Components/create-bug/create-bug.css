@@ -1,244 +1,213 @@
-```css
-/* =========================
-   CREATE BUG
-   ========================= */
 .create-bug {
-  width: 92%;
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 40px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
-.create-bug h1 {
-  margin: 0 0 30px;
-  font-size: 28px;
-  font-weight: 600;
-}
-
-/* =========================
-   FORM
-   ========================= */
-
-.create-bug form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.create-bug label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-/* =========================
-   INPUTS
-   ========================= */
-
-.create-bug input,
-.create-bug textarea,
-.create-bug select {
   width: 100%;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 35px 50px;
   box-sizing: border-box;
-  padding: 12px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #ffffff;
-  font: inherit;
-  font-size: 15px;
-  outline: none;
 }
 
-.create-bug input,
-.create-bug select {
-  height: 44px;
-}
-
-.create-bug textarea {
-  min-height: 150px;
-  resize: vertical;
-}
-
-  .create-bug input:focus,
-  .create-bug textarea:focus,
-  .create-bug select:focus {
-    border-color: #6b7280;
+  .create-bug h1 {
+    margin: 0 0 30px;
+    font-size: 28px;
+    color: #1e3a8a;
   }
 
-/* =========================
-   ERROR
-   ========================= */
+  /* Form */
+  .create-bug form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .create-bug label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .create-bug input,
+  .create-bug textarea,
+  .create-bug select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #1e293b;
+    outline: none;
+  }
+
+  .create-bug input,
+  .create-bug select {
+    height: 44px;
+  }
+
+  .create-bug textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+    /* Focus */
+    .create-bug input:focus,
+    .create-bug textarea:focus,
+    .create-bug select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+    }
+
+/* Validation */
+.field-error {
+  margin-top: 2px;
+  font-size: 13px;
+  color: #dc2626;
+}
 
 .error {
-  margin: 0 0 20px;
-  padding: 11px 14px;
+  margin-bottom: 20px;
+  padding: 10px 12px;
   border-radius: 6px;
-  background: #fef2f2;
+  background: #fee2e2;
   color: #b91c1c;
-  font-size: 14px;
 }
 
-.field-error {
-  margin-top: -12px;
-  color: #dc2626;
-  font-size: 13px;
-}
-
-/* =========================
-   ASSIGNEE
-   ========================= */
-
+/* Assignee */
 .assignee-search {
   position: relative;
   width: 100%;
 }
 
-  .assignee-search input {
-    width: 100%;
-  }
-
 .assignee-dropdown {
   position: absolute;
-  z-index: 100;
-  top: calc(100% + 4px);
   left: 0;
-  width: 100%;
-  max-height: 220px;
+  right: 0;
+  top: calc(100% + 2px);
+  z-index: 10;
+  max-height: 200px;
   overflow-y: auto;
   background: #ffffff;
-  border: 1px solid #d1d5db;
+  border: 1px solid #bfdbfe;
   border-radius: 6px;
-  box-sizing: border-box;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
 }
 
 .user-option {
-  padding: 11px 14px;
-  font-size: 14px;
+  padding: 12px 14px;
   cursor: pointer;
+  font-size: 14px;
+  color: #1e293b;
 }
 
   .user-option:hover {
-    background: #f3f4f6;
+    background: #eff6ff;
+    color: #1d4ed8;
   }
 
 .assignee-dropdown p {
+  padding: 12px 14px;
   margin: 0;
-  padding: 11px 14px;
-  color: #6b7280;
   font-size: 14px;
+  color: #64748b;
 }
 
-/* =========================
-   SELECTED ASSIGNEE
-   ========================= */
-
+/* Selected assignee */
 .selected-assignee {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-top: -10px;
-  padding: 9px 14px;
-  background: #f3f4f6;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 6px;
+  color: #1e40af;
   font-size: 14px;
 }
 
   .selected-assignee button {
     border: none;
     background: transparent;
+    color: #2563eb;
     cursor: pointer;
-    font-size: 16px;
-    padding: 2px 5px;
+    font-size: 15px;
   }
 
-/* =========================
-   FORM ACTIONS
-   ========================= */
-
+/* Buttons */
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 15px;
+  margin-top: 30px;
 }
 
   .form-actions button {
-    min-width: 120px;
     height: 42px;
-    padding: 0 18px;
-    border: 1px solid #d1d5db;
+    padding: 0 24px;
+    border: none;
     border-radius: 6px;
-    background: #ffffff;
-    font-size: 14px;
+    font-size: 15px;
     cursor: pointer;
+    white-space: nowrap;
   }
 
+    /* Create button */
     .form-actions button[type="submit"] {
-      border-color: #111827;
-      background: #111827;
-      color: #ffffff;
+      background: #2563eb;
+      color: white;
     }
 
-      .form-actions button[type="submit"]:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+      .form-actions button[type="submit"]:hover {
+        background: #1d4ed8;
       }
 
-    .form-actions button[type="button"]:hover {
-      background: #f3f4f6;
+    /* Cancel button */
+    .form-actions button[type="button"] {
+      background: #dbeafe;
+      color: #1e40af;
     }
 
-/* =========================
-   TABLET
-   ========================= */
+      .form-actions button[type="button"]:hover {
+        background: #bfdbfe;
+      }
 
+    .form-actions button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+/* Tablet */
 @media (max-width: 900px) {
   .create-bug {
-    width: 94%;
-    padding: 32px;
+    max-width: 850px;
+    padding: 30px 35px;
   }
 }
 
-/* =========================
-   MOBILE
-   ========================= */
-
+/* Mobile */
 @media (max-width: 600px) {
   .create-bug {
-    width: calc(100% - 20px);
+    max-width: none;
+    padding: 20px 15px;
     margin: 20px auto;
-    padding: 22px;
   }
 
     .create-bug h1 {
-      font-size: 23px;
-      margin-bottom: 24px;
-    }
-
-    .create-bug form {
-      gap: 17px;
-    }
-
-    .create-bug textarea {
-      min-height: 120px;
+      font-size: 24px;
+      margin-bottom: 25px;
     }
 
   .form-actions {
-    flex-direction: column-reverse;
-    width: 100%;
+    flex-direction: column;
+    gap: 10px;
   }
 
     .form-actions button {
       width: 100%;
     }
 }
-
-```

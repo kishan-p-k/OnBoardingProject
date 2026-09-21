@@ -55,6 +55,9 @@ export class BugListService {
     this.activeFilter = filter
 
     let params = new HttpParams();
+    if (filter.keyword) {
+      params = params.set('keyword', filter.keyword);
+    }
     if (filter.status) {
       params = params.set('status', filter.status);
     }
