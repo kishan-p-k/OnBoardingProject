@@ -3,8 +3,8 @@ using BT;
 using BT.Implementation.Providers;
 using Microsoft.Extensions.Logging;
 
-namespace BT.Implementation.Services
-{
+namespace BT.Implementation.Services;
+
     public class UserBugsService : IUserBugsService
     {
         private readonly IUserBugsProvider _userBugsProvider;
@@ -16,7 +16,7 @@ namespace BT.Implementation.Services
             _logger = logger;
         }
 
-        public List<Bug> GetUserBugs(string Reference_id)
+     public List<Bug> GetUserBugs(string Reference_id)
         {
             _logger.LogInformation(
                 "Fetching user bugs for Reference_id: {Reference_id}", Reference_id);
@@ -39,5 +39,28 @@ namespace BT.Implementation.Services
                 throw;
             }
         }
-    }
+
+
+        public Bug CreateBug(Bug bug)
+        {
+            _logger.LogInformation(
+                "Creating a new bug");
+
+            try
+            {
+                Bug bugs = _userBugsProvider.CreateBug(bug);
+
+                _logger.LogInformation(
+                    "Successfully created new bug");
+
+                return bugs;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "Error creating new bug");
+                throw;
+            }
+        }
 }

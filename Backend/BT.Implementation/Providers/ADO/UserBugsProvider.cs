@@ -68,4 +68,110 @@ public class UserBugsProvider : IUserBugsProvider
             throw;
         }
     }
+    public Bug CreateBug(Bug bug)
+    {
+        try
+        {
+            using SqlConnection connection =
+                _databaseConnection.CreateConnection();
+
+            using SqlCommand command =
+                new SqlCommand("CreateBug", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@Title", SqlDbType.VarChar).Value = bug.Title;
+
+            command.Parameters.Add("@Description", SqlDbType.VarChar).Value = bug.Description;
+
+            command.Parameters.Add("@Priority", SqlDbType.VarChar).Value = bug.Priority;
+
+            command.Parameters.Add("@Status", SqlDbType.VarChar).Value = "Open";
+
+            command.Parameters.Add("@CreatedBy", SqlDbType.VarChar).Value = bug.CreatedBy;
+
+            command.Parameters.Add("@Assignee", SqlDbType.VarChar).Value = bug.Assignee;
+
+            connection.Open();
+
+            _logger.LogInformation(
+                "Database connection opened successfully.");
+
+            _logger.LogInformation(
+                "Executing stored procedure {ProcedureName}.",
+                "UpdateBugField");
+
+            using SqlDataReader reader = command.ExecuteReader();
+
+            _logger.LogInformation(
+                "Stored procedure executed successfully.");
+
+            if (!reader.Read())
+            {
+                _logger.LogWarning(
+                    "Stored procedure returned no rows");
+                 return null;
+            }
+
+            _logger.LogInformation(
+                "Stored procedure returned a bug row. Reading result.");
+
+            var newbug = new Bug
+            {
+                Reference_id = reader["reference_id"].ToString()!,
+
+                Title = reader["title"].ToString()!,
+
+                Description = reader["description"] == DBNull.Value
+                    ? null
+                    : reader["description"].ToString(),
+
+                Priority = reader["priority"].ToString()!,
+
+                Status = reader["status"].ToString()!,
+
+                CreatedBy = reader["created_by"].ToString()!,
+
+                Assignee = reader["assignee"] == DBNull.Value
+                    ? null
+                    : reader["assignee"].ToString(),
+
+                CreatedDate = Convert.ToDateTime(
+                    reader["created_date"])
+            };
+
+            _logger.LogInformation(
+                "Bug successfully read after update. RefId: {ref_id}, Status: {Status}, Priority: {Priority}, Assignee: {Assignee}",
+                newbug.Reference_id,
+                newbug.Status,
+                newbug.Priority,
+                newbug.Assignee);
+
+            return newbug;
+        }
+        catch (FormatException ex)
+        {
+            _logger.LogError(
+                ex,
+                "Invalid");
+
+            throw;
+        }
+        catch (SqlException ex)
+        {
+            _logger.LogError(
+                ex,
+                "Database error while executing CreateBug");
+
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error while creating bug.");
+
+            throw;
+        }
+    }
 }

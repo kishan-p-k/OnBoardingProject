@@ -44,9 +44,8 @@ export class UserBugsComponent implements OnInit {
 
     console.log(this.user?.username);
   }
-  AddBugs() {
-    console.log("New Bug Button clicked");
-     //this.router.navigate(['/bug/create']);
-  }
+  AddBugs(): void {
+      this.router.navigate(['/bug/create']);
+   }
 }
 

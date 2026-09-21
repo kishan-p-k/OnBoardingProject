@@ -1,0 +1,91 @@
+<section class="create-bug">
+  <h1>Create New Bug</h1>
+
+  @if (errorMessage()) {
+  <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <form [formGroup]="bugForm" (ngSubmit)="onSubmit()">
+
+    <label>
+      Title
+      <input formControlName="title" type="text" />
+    </label>
+    @if (title?.invalid && title?.touched) {
+    <span class="field-error">Title is required.</span>
+    }
+
+    <label>
+      Description
+      <textarea formControlName="description"></textarea>
+    </label>
+    @if (description?.invalid && description?.touched) {
+    <span class="field-error">Description is required.</span>
+    }
+
+    <label>
+      Priority
+      <select formControlName="priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        <option value="Critical">Critical</option>
+      </select>
+    </label>
+
+    <!-- ASSIGNEE -->
+    <label>Assignee</label>
+
+    <div class="assignee-search">
+
+      <input type="text"
+             [formControl]="assigneeControl"
+             placeholder="Search user..."
+             (focus)="showAssigneeDropdown = true" />
+
+      @if (showAssigneeDropdown) {
+
+      <div class="assignee-dropdown">
+
+        @if (assigneeValue$ | async; as users) {
+
+        @if (users.length > 0) {
+
+        @for (user of users; track user) {
+        <div class="user-option" (click)="selectAssignee(user)">
+          {{ user }}
+        </div>
+        }
+
+        } @else {
+        <p>No users found</p>
+        }
+
+        }
+
+      </div>
+
+      }
+
+    </div>
+
+    @if (assignee?.value) {
+    <div class="selected-assignee">
+      Selected: {{ assignee?.value }}
+      <button type="button" (click)="clearAssignee()">✕</button>
+    </div>
+    }
+
+    @if (assignee?.invalid && assignee?.touched) {
+    <span class="field-error">Assignee is required.</span>
+    }
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Creating...' : 'Create Bug' }}
+      </button>
+      <button type="button" (click)="onCancel()">Cancel</button>
+    </div>
+
+  </form>
+</section>

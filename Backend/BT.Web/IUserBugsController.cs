@@ -6,4 +6,5 @@ namespace BT.Web;
 public interface IUserBugsController
 {
     List<Bug> GetUserBugs(string ReferenceId);
+    Bug CreateBug(Bug bug);
 }
