@@ -1,0 +1,244 @@
+```css
+/* =========================
+   CREATE BUG
+   ========================= */
+.create-bug {
+  width: 92%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 40px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.create-bug h1 {
+  margin: 0 0 30px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* =========================
+   FORM
+   ========================= */
+
+.create-bug form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create-bug label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* =========================
+   INPUTS
+   ========================= */
+
+.create-bug input,
+.create-bug textarea,
+.create-bug select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+.create-bug input,
+.create-bug select {
+  height: 44px;
+}
+
+.create-bug textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+  .create-bug input:focus,
+  .create-bug textarea:focus,
+  .create-bug select:focus {
+    border-color: #6b7280;
+  }
+
+/* =========================
+   ERROR
+   ========================= */
+
+.error {
+  margin: 0 0 20px;
+  padding: 11px 14px;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+.field-error {
+  margin-top: -12px;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+/* =========================
+   ASSIGNEE
+   ========================= */
+
+.assignee-search {
+  position: relative;
+  width: 100%;
+}
+
+  .assignee-search input {
+    width: 100%;
+  }
+
+.assignee-dropdown {
+  position: absolute;
+  z-index: 100;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.user-option {
+  padding: 11px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+  .user-option:hover {
+    background: #f3f4f6;
+  }
+
+.assignee-dropdown p {
+  margin: 0;
+  padding: 11px 14px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* =========================
+   SELECTED ASSIGNEE
+   ========================= */
+
+.selected-assignee {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: -10px;
+  padding: 9px 14px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+  .selected-assignee button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 5px;
+  }
+
+/* =========================
+   FORM ACTIONS
+   ========================= */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+  .form-actions button {
+    min-width: 120px;
+    height: 42px;
+    padding: 0 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+    .form-actions button[type="submit"] {
+      border-color: #111827;
+      background: #111827;
+      color: #ffffff;
+    }
+
+      .form-actions button[type="submit"]:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+    .form-actions button[type="button"]:hover {
+      background: #f3f4f6;
+    }
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+  .create-bug {
+    width: 94%;
+    padding: 32px;
+  }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+  .create-bug {
+    width: calc(100% - 20px);
+    margin: 20px auto;
+    padding: 22px;
+  }
+
+    .create-bug h1 {
+      font-size: 23px;
+      margin-bottom: 24px;
+    }
+
+    .create-bug form {
+      gap: 17px;
+    }
+
+    .create-bug textarea {
+      min-height: 120px;
+    }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+    .form-actions button {
+      width: 100%;
+    }
+}
+
+```

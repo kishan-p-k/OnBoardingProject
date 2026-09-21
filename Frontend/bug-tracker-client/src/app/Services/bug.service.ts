@@ -46,5 +46,11 @@ export class BugService {
       `http://localhost:5135/bug/${ref_id}`,
       body
     );
+
+  }
+
+
+  createBug() {
+
   }
   }

@@ -9,11 +9,18 @@ export interface Bug {
   description: string;
   priority: string;
   status: string;
-  createdBy: number;
+  createdBy: string;
   assignee: number | null;
   createdDate: Date;
 }
-
+export interface CreateBugRequest {
+  title: string;
+  description: string;
+  priority: string;
+  assignee: string;
+  status: string;
+  created_by: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +42,16 @@ export class UserBugsService {
       })
     );
   }
+
+
+  createBug(bug: CreateBugRequest): Observable<Bug> {
+    console.log("Request recieved to insert{bug}",bug)
+  return this.http.post<Bug>(`http://localhost:5135/userbugs/create`, bug).pipe(
+    tap((created: Bug) => {
+      console.log('Created bug:', created);
+    })
+  );
+}
 }
 
 

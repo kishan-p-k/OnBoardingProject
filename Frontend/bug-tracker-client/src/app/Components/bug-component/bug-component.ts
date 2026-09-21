@@ -142,9 +142,6 @@ export class BugComponent {
   }
 
 
-  // =========================
-  // UPDATE FIELD
-  // =========================
 
   fieldChanged(
     event: Event,

@@ -38,4 +38,28 @@ public class UserBugsController : ControllerBase
             return new List<Bug>();
         }
     }
+    [HttpPost("create")]
+    public Bug CreateBug([FromBody] Bug bug)
+    {
+        _logger.LogInformation(
+            "POST request received for bug with details{update}.",bug);
+
+        try
+        {
+            Bug? newbug = _userBugsService.CreateBug(bug);
+
+            _logger.LogInformation(
+                "Returning updated bug with ID {ref_id} to the client.");
+
+            return newbug;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error while processing PUT bug/{ref_id}.");
+
+            return null;
+        }
+    }
 }
