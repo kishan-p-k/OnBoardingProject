@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  merge, Subject, of, switchMap,
+  Subject,
   debounceTime,
   distinctUntilChanged
 } from 'rxjs';
 
 export interface BugFilter {
-  reference_id?: string|null;
+  reference_id?: string | null;
   keyword?: string;
   status?: string;
   priority?: string;
@@ -16,20 +16,24 @@ export interface BugFilter {
 }
 
 @Component({
-  imports: [FormsModule,ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   standalone: true,
   selector: 'app-filter-box',
   styleUrls: ['./filter-box.css'],
   templateUrl: './filter-box.html',
 })
-export class FilterBox {
+export class FilterBox implements OnChanges {
+
   @Input() reference_id: string | null = null;
+  @Input() resetFilter = false;
+
   @Output() filterChanged = new EventEmitter<BugFilter>();
+
   keywordControl = new FormControl('');
 
   filter: BugFilter = {
-    reference_id:'',
-    keyword:'',
+    reference_id: '',
+    keyword: '',
     status: '',
     priority: '',
     assignee: '',
@@ -47,6 +51,13 @@ export class FilterBox {
         this.applyFilter();
       });
   }
+
+  ngOnChanges(): void {
+    if (this.resetFilter) {
+      this.clearFilter();
+    }
+  }
+
   highlightKeyword(title: string, keyword: string): string {
     if (!keyword) {
       return title;
@@ -59,22 +70,22 @@ export class FilterBox {
     return title.replace(regex, '<mark>$1</mark>');
   }
 
-  applyFilter() {
+  applyFilter(): void {
     this.filter.reference_id = this.reference_id;
     this.filterChanged.emit(this.filter);
   }
 
-  clearFilter() {
+  clearFilter(): void {
     this.keywordControl.setValue('', { emitEvent: false });
+
     this.filter = {
       status: '',
       priority: '',
       assignee: '',
       createdBy: '',
-      reference_id:''
+      reference_id: ''
     };
-    this.applyFilter();
-    window.location.reload();
 
+    this.applyFilter();
   }
 }

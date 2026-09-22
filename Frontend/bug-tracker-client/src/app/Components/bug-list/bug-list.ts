@@ -20,6 +20,7 @@ export class BugListComponent {
   keyword = '';
 
   applyFilter(filter: BugFilter) {
+
     this.keyword = filter.keyword ?? '';
 
     this.bugs$ = this.bugListService.filterBugs(filter);

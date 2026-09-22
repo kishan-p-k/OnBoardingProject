@@ -8,6 +8,7 @@
   <h1>Hello, {{user?.username}}</h1>
   <div class="bug-filter">
     <app-filter-box [reference_id]="user?.reference_id ?? null"
+                    [resetFilter]="true"
                     (filterChanged)="applyFilter($event)">
     </app-filter-box>
     <h2>Your Bugs</h2>

@@ -1,7 +1,8 @@
 <section class="bug-list-container">
   <app-navigation></app-navigation>
     <h1>All Bugs</h1>
-    <app-filter-box (filterChanged)="applyFilter($event)">
+    <app-filter-box [resetFilter]="true"
+                    (filterChanged)="applyFilter($event)">
     </app-filter-box>
     @if (errorMessage) {
     <p>{{ errorMessage }}</p>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, switchMap } from 'rxjs';  
 import { UserBugsService, Bug } from '../../Services/user-bugs-service';
@@ -22,7 +22,6 @@ export class UserBugsComponent implements OnInit {
   errorMessage = '';
   user: User | null = null;
   keyword = '';
-
   ViewAllBugs()
   {
     console.log("View All Bugs clicked");
