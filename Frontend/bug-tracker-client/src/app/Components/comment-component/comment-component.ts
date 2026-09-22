@@ -130,6 +130,8 @@ export class CommentComponent implements OnChanges {
           console.error('Error creating comment:', err);
         }
       });
+    window.location.reload();
+
   }
 
   cancelNewComment(): void {

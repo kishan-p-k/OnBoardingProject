@@ -74,5 +74,7 @@ export class FilterBox {
       reference_id:''
     };
     this.applyFilter();
+    window.location.reload();
+
   }
 }
