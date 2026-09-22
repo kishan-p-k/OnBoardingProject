@@ -1,6 +1,12 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .bug-list-container {
   width: 100%;
   max-width: 1400px;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 30px 40px;
   box-sizing: border-box;
@@ -55,6 +61,7 @@
 @media (max-width: 650px) {
   .bug-list-container {
     padding: 20px 15px;
+    min-height: 100vh;
   }
 
     .bug-list-container h1 {
