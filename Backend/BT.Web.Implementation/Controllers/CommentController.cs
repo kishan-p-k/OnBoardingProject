@@ -83,4 +83,38 @@ public class CommentController : ControllerBase, ICommentController
             throw;
         }
     }
+
+
+    [HttpPost("{reference_id}")]
+    public Comment CreateComment(
+    [FromRoute] string reference_id,
+    [FromBody] Comment comment)
+    {
+        _logger.LogInformation(
+            "Starting comment creation");
+
+        try
+        {
+            _logger.LogDebug(
+                "Received comment creation request");
+            Comment newcomment = _commentService.CreateComment(
+                reference_id,
+                comment.comment,comment.author);
+
+            _logger.LogInformation(
+                "Successfully created comment");
+
+            return newcomment;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Error updating comment with Reference ID: {ReferenceId}",
+                reference_id);
+
+            throw;
+        }
+    }
+
 }

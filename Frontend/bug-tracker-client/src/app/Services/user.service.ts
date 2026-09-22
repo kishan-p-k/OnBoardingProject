@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface User {
   username: string;
+  reference_id: string;
 }
 
 @Injectable({

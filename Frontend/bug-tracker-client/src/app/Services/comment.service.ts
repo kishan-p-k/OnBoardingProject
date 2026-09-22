@@ -46,4 +46,23 @@ export class CommentService {
         })
       );
   }
+  CreateComment(
+    reference_id: string,
+    comment: string,
+    author: string
+  ): Observable<Comment> {
+    return this.http
+      .post<Comment>(
+        `http://localhost:5135/comment/${reference_id}`,
+        {
+          comment: comment,
+          author: author
+        }
+      )
+      .pipe(
+        tap((comment: Comment) => {
+          console.log('Createcomment response:', comment);
+        })
+      );
+  }
 }

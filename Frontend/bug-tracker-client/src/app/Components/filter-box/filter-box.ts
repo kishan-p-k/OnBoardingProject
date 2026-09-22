@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   merge, Subject, of, switchMap,
@@ -7,6 +7,7 @@ import {
 } from 'rxjs';
 
 export interface BugFilter {
+  reference_id?: string|null;
   keyword?: string;
   status?: string;
   priority?: string;
@@ -22,10 +23,12 @@ export interface BugFilter {
   templateUrl: './filter-box.html',
 })
 export class FilterBox {
+  @Input() reference_id: string | null = null;
   @Output() filterChanged = new EventEmitter<BugFilter>();
   keywordControl = new FormControl('');
 
   filter: BugFilter = {
+    reference_id:'',
     keyword:'',
     status: '',
     priority: '',
@@ -57,6 +60,7 @@ export class FilterBox {
   }
 
   applyFilter() {
+    this.filter.reference_id = this.reference_id;
     this.filterChanged.emit(this.filter);
   }
 
@@ -66,7 +70,8 @@ export class FilterBox {
       status: '',
       priority: '',
       assignee: '',
-      createdBy: ''
+      createdBy: '',
+      reference_id:''
     };
     this.applyFilter();
   }
