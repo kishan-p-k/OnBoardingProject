@@ -46,6 +46,63 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   }
 
+.bug-component-header {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.bug-title {
+  overflow-wrap: break-word;
+}
+
+.bug-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  background: #eee;
+  color: #333;
+}
+
+.status-badge.status-open {
+  background: #fdecea;
+  color: #c0392b;
+}
+
+.status-badge.status-in-progress {
+  background: #fff4e5;
+  color: #b35c00;
+}
+
+.status-badge.status-resolved,
+.status-badge.status-closed {
+  background: #e6f4ea;
+  color: #1e7e34;
+}
+
+.priority-badge.priority-high {
+  background: #fdecea;
+  color: #c0392b;
+}
+
+.priority-badge.priority-medium {
+  background: #fff4e5;
+  color: #b35c00;
+}
+
+.priority-badge.priority-low {
+  background: #e8f0fe;
+  color: #1a56cc;
+}
+
 /* Tablet */
 @media (max-width: 1000px) {
   .bug-list-container {

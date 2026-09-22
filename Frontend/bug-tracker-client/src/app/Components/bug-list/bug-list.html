@@ -53,7 +53,13 @@
     }
   </a>-->
   <a class="bug-component" [routerLink]="[bug.reference_id]">
-    {{ bug.title }}
+    <div class="bug-component-header">
+      <span class="bug-title">{{ bug.title }}</span>
+    </div>
+    <div class="bug-badges">
+      <span class="badge status-badge" [ngClass]="'status-' + (bug.status ?? '').toLowerCase().replace(' ', '-')">{{ bug.status ?? '-' }}</span>
+      <span class="badge priority-badge" [ngClass]="'priority-' + (bug.priority ?? '').toLowerCase()">{{ bug.priority ?? '-' }}</span>
+    </div>
   </a>
   }
 </div>
