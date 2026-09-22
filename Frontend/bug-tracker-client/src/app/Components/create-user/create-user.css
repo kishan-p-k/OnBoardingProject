@@ -1,14 +1,12 @@
-.login-container {
-  min-height: 100vh;
+.Register-container {
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f5f5f5;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
-.login-box {
+.Register-box {
   width: 350px;
   padding: 30px;
   background-color: white;
@@ -16,7 +14,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-  .login-box h1 {
+  .Register-box h1 {
     text-align: center;
     margin-bottom: 25px;
   }
@@ -28,28 +26,18 @@
   .form-group label {
     display: block;
     margin-bottom: 6px;
-    font-weight: 500;
   }
 
   .form-group input {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
   }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: #333;
-    }
 
   .form-group p {
     color: red;
     font-size: 12px;
     margin-top: 5px;
-    margin-bottom: 0;
   }
 
 button {
@@ -71,22 +59,4 @@ button {
     background-color: #9ca3af;
     cursor: not-allowed;
     opacity: 0.7;
-  }
-
-.signup-option {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-  .signup-option span {
-    white-space: nowrap;
-    font-size: 14px;
-  }
-
-  .signup-option button {
-    flex: 1;
-    width: auto;
-    padding: 10px;
   }

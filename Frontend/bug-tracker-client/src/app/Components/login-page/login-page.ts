@@ -59,4 +59,7 @@ export class LoginPage {
     this.user$.subscribe();
 
   }
+  goToSignup(): void {
+    this.router.navigate(['/signup']);
+  }
 }

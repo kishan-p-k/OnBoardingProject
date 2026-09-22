@@ -72,4 +72,67 @@ public class AuthProvider : IAuthProvider
             throw; // Rethrow the exception to be handled by the caller
         }
     }
+
+    public Users? CreateUser(string username, string mail, string password)
+    {
+        _logger.LogInformation(
+            "Starting database operation to create a new user.");
+        try
+        {
+            using (var connection = _databaseConnection.CreateConnection())
+            {
+                using SqlCommand command =
+                new SqlCommand("CreateUser", connection);
+
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.Add(
+                "@Username",
+                SqlDbType.VarChar,
+                100
+                ).Value = username;
+
+                command.Parameters.Add(
+                "@Mail",
+                SqlDbType.VarChar,
+                100
+                ).Value = mail;
+
+                command.Parameters.Add(
+                "@Password",
+                SqlDbType.VarChar,
+                200
+                ).Value = password;
+
+                connection.Open();
+                _logger.LogDebug(
+               "Database connection opened. Executing stored procedure {ProcedureName}.",
+               "CreateUser");
+                using SqlDataReader reader = command.ExecuteReader();
+                Users? user = null;
+                if (reader.Read())
+                {
+                    user = new Users
+                    {
+                        Reference_id = reader["reference_id"].ToString(),
+                        Username = reader["username"].ToString(),
+                        Mail = reader["mail"].ToString()
+                    };
+                    _logger.LogInformation(
+                "Successfully created user in the database.");
+                    return user;
+                }
+
+                _logger.LogWarning(
+                "User could not be created. The mail may already be registered.");
+
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred while creating user.");
+            throw; // Rethrow the exception to be handled by the caller
+        }
+    }
 }

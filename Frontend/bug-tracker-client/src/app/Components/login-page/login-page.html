@@ -39,6 +39,12 @@
         }
       </div>
       <button type="submit" [disabled]="loginForm.invalid"> Login </button>
+
+      <div class="signup-option">
+        <span>New user?</span>
+        <button type="button" (click)="goToSignup()">Sign Up</button>
+      </div>
+
     </form>
   </div>
 </div>

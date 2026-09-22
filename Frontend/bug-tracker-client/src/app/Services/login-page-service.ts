@@ -39,6 +39,15 @@ export class LoginPageService {
   {
     return this.http.get<User | null>(`${this.apiUrl}/${usernameOrMail}/${password}`);
   }
+
+  register(username: string, mail: string, password: string): Observable<User | null>
+  {
+    return this.http.post<User | null>(`${this.apiUrl}/register`, {
+      username,
+      mail,
+      password
+    });
+  }
   logout() {
     sessionStorage.removeItem('currentUser');
     this.currentUser = null;

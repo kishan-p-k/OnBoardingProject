@@ -1,0 +1,79 @@
+import { Component } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { LoginPageService } from '../../Services/login-page-service';
+
+@Component({
+  imports: [ReactiveFormsModule],
+  standalone: true,
+  selector: 'app-create-user',
+  styleUrls: ['./create-user.css'],
+  templateUrl: './create-user.html',
+})
+export class CreateUser {
+  username = new FormControl('', [
+    Validators.required,
+  ]);
+  email = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  newPassword = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8)
+  ]);
+  confirmPassword = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8)
+  ]);
+  registerForm = new FormGroup(
+    {
+    username: this.username,
+    email: this.email,
+    newPassword: this.newPassword,
+    confirmPassword: this.confirmPassword
+    },
+    {
+      validators: this.passwordMatchValidator
+    }
+  );
+
+  errorMessage = '';
+
+  constructor(private readonly loginService: LoginPageService, private readonly router: Router) { }
+
+  passwordMatchValidator(
+    form: AbstractControl
+  ): ValidationErrors | null {
+
+    const password = form.get('newPassword')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+
+    return password === confirmPassword
+      ? null
+      : { passwordMismatch: true };
+  }
+
+  register() {
+    if (this.registerForm.invalid) return;
+
+    this.errorMessage = '';
+    const username = this.username.value ?? '';
+    const email = this.email.value ?? '';
+    const password = this.newPassword.value ?? '';
+
+    this.loginService.register(username, email, password).pipe(
+      tap((user) => {
+        this.loginService.setCurrentUser(user);
+        this.router.navigate(['/userbugs', user?.reference_id]);
+      }),
+      catchError((error) => {
+        console.error('Registration error:', error);
+        this.errorMessage = 'Failed to register. Please try again.';
+        return of(null);
+      })
+    ).subscribe();
+  }
+}

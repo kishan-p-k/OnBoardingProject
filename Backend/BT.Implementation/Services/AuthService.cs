@@ -58,4 +58,35 @@ public class AuthService : IAuthService
             throw;
         }
     }
+
+    public Users? CreateUser(string username, string mail, string password)
+    {
+        _logger.LogInformation(
+            "Starting user registration for {Mail}.", mail);
+        try
+        {
+            Users? user = _authProvider.CreateUser(username, mail, password);
+
+            if (user == null)
+            {
+                _logger.LogWarning(
+                    "User registration failed for {Mail}. Mail may already be in use.",
+                    mail);
+                return null;
+            }
+
+            _logger.LogInformation(
+                "Successfully registered user {Reference_id}.",
+                user.Reference_id);
+
+            return user;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Error occurred during user registration.");
+            throw;
+        }
+    }
 }

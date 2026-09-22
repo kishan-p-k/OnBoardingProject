@@ -1,0 +1,81 @@
+<div class="Register-container">
+
+  <div class="Register-box">
+
+    <h1>Register</h1>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+      <div class="form-group">
+        <label for="username">Username</label>
+
+        <input type="text"
+               id="username"
+               name="username"
+               placeholder="Enter your username"
+               formControlName="username" />
+        @if(username.touched && username.errors?.['required']){
+        <p>Username is required</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+
+        <input type="email"
+               id="email"
+               name="email"
+               placeholder="Enter your email"
+               formControlName="email" />
+        @if(email.touched && email.errors?.['required']){
+        <p>Email is required</p>
+        }
+        @if (email.touched && email.errors?.['email']) {
+        <p>Please enter a valid email address.</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input type="password"
+               id="newPassword"
+               name="newPassword"
+               placeholder="Enter your password"
+               formControlName="newPassword" />
+        @if (newPassword.touched && newPassword.errors?.['required']) {
+        <p>Password is required.</p>
+        }
+
+        @if (newPassword.touched && newPassword.errors?.['minlength']) {
+        <p>Password must be at least 8 characters.</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Confirm Password</label>
+
+        <input type="password"
+               id="confirmPassword"
+               name="confirmPassword"
+               placeholder="Confirm your password"
+               formControlName="confirmPassword" />
+        @if (confirmPassword.touched && confirmPassword.errors?.['required']) {
+        <p>Password is required.</p>
+        }
+
+        @if (confirmPassword.touched && confirmPassword.errors?.['minlength']) {
+        <p>Password must be at least 8 characters.</p>
+        }
+
+        @if (confirmPassword.touched && registerForm.errors?.['passwordMismatch']) {
+        <p>Passwords do not match.</p>
+        }
+
+      </div>
+
+      <button type="submit" [disabled]="registerForm.invalid"> Register </button>
+
+    </form>
+  </div>
+</div>

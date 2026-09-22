@@ -1,3 +1,4 @@
+using BT.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BT.Web;
@@ -5,4 +6,6 @@ namespace BT.Web;
 public interface IAuthController
 {
     IActionResult Login(string Mail, string password);
+
+    IActionResult CreateUser(Users request);
 }

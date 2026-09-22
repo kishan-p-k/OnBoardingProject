@@ -59,6 +59,51 @@ public class AuthController : ControllerBase,IAuthController
                 "An unexpected error occurred.");
         }
     }
+
+    [HttpPost("register")]
+    public User? CreateUser([FromBody] Users request)
+    {
+        _logger.LogInformation(
+            "POST request received for user registration.");
+
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Users? user = _authService.CreateUser(request.Username, request.Mail, request.Password);
+
+            if (user == null)
+            {
+                return Conflict("A user with this email already exists.");
+            }
+
+            //var userResponse = new
+            //{
+            //    user.Reference_id,
+            //    user.Username,
+            //    user.Mail
+            //};
+
+            _logger.LogInformation(
+                "Successfully created user {Reference_id}.",
+                user.Reference_id);
+
+            return user;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error while processing POST /userauth/register.");
+
+            return StatusCode(
+                StatusCodes.Status500InternalServerError,
+                "An unexpected error occurred.");
+        }
+    }
 }
 
 
