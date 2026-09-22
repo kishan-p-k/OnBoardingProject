@@ -10,7 +10,7 @@ export interface Bug {
   priority: string;
   status: string;
   createdBy: string;
-  assignee: number | null;
+  assignee: string | null;
   createdDate: Date;
 }
 export interface CreateBugRequest {

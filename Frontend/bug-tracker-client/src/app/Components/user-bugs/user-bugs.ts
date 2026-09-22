@@ -7,11 +7,13 @@ import { RouterLink,ActivatedRoute,Router } from '@angular/router';
 import { LoginPageService } from '../../Services/login-page-service';
 import { User } from '../../Services/user.service';
 import { Navigation } from '../navigation/navigation';
+import { BugListService} from '../../Services/bug-list-service';
+import { BugFilter, FilterBox } from '../filter-box/filter-box';
 
 @Component({
   selector: 'app-user-bugs',
   standalone: true,
-  imports: [AsyncPipe, RouterLink, CommonModule, Navigation],
+  imports: [AsyncPipe, RouterLink, CommonModule, Navigation, FilterBox],
   templateUrl: './user-bugs.html',
   styleUrls: ['./user-bugs.css']
 })
@@ -19,13 +21,14 @@ export class UserBugsComponent implements OnInit {
   bugs$: Observable<Bug[]>;
   errorMessage = '';
   user: User | null = null;
+  keyword = '';
 
   ViewAllBugs()
   {
     console.log("View All Bugs clicked");
     this.router.navigate(['/bug']);
   }
-  constructor(private readonly userBugsService: UserBugsService, private readonly loginService: LoginPageService, private readonly route: ActivatedRoute, private readonly router: Router) {
+  constructor(private readonly userBugsService: UserBugsService, private readonly bugListService: BugListService, private readonly loginService: LoginPageService, private readonly route: ActivatedRoute, private readonly router: Router) {
     this.bugs$ = this.route.paramMap.pipe(
       switchMap(params => {
         const ref_id = params.get('ref_id');
@@ -42,10 +45,18 @@ export class UserBugsComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.loginService.getCurrentUser();
 
-    console.log(this.user?.username);
+    console.log(this.user);
   }
   AddBugs(): void {
       this.router.navigate(['/bug/create']);
-   }
+  }
+  applyFilter(filter: BugFilter):void {
+    this.keyword = filter.keyword ?? '';
+
+    this.bugs$ = this.bugListService.filterBugs(filter);
+
+    console.log(filter);
+  }
+
 }
 

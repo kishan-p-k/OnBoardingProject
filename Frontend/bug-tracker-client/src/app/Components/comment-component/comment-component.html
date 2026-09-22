@@ -1,47 +1,106 @@
-@if (comments$ | async; as comments) {
+<div class="comment-section">
+
+  <div class="new-comment">
+
+    <button type="button"
+            class="new-comment-button"
+            (click)="showNewComment = !showNewComment">
+      + New Comment
+    </button>
+
+    @if (showNewComment) {
+    <div class="new-comment-form">
+
+      <textarea [(ngModel)]="newComment"
+                rows="3"
+                placeholder="Write a comment...">
+        </textarea>
+
+      <div class="new-comment-actions">
+
+        <button type="button"
+                (click)="addComment()">
+          Add
+        </button>
+
+        <button type="button"
+                (click)="cancelNewComment()">
+          Cancel
+        </button>
+
+      </div>
+
+    </div>
+    }
+
+  </div>
+
+
+  @if (comments$ | async; as comments) {
+
   @for (comment of comments; track comment.reference_id) {
-<div class="comment">
-  <div class="comment-content">
-    <small>
-      {{ comment.author === currentUser ? 'You' : comment.author }}
-    </small>
-    <p>
-      @if(editingCommentId === comment.reference_id)
-      {
-      <textarea
-             [(ngModel)]="editedValue"
-              rows="3"
-             autofocus>
-      </textarea>
-      <button type="button"
-              (click)="saveComment(comment)">
-        ✓
-      </button>
+
+  <div class="comment">
+
+    <div class="comment-content">
+
+      <small>
+        {{ comment.author === currentUser ? 'You' : comment.author }}
+      </small>
+
+      <p>
+
+        @if (editingCommentId === comment.reference_id) {
+
+        <textarea [(ngModel)]="editedValue"
+                  rows="3"
+                  autofocus>
+              </textarea>
+
+        <button type="button"
+                (click)="saveComment(comment)">
+          ✓
+        </button>
+
+        <button type="button"
+                (click)="cancelEdit()">
+          ✕
+        </button>
+
+        }
+        @else {
+
+        {{ comment.comment }}
+
+        }
+
+      </p>
+
+    </div>
+
+
+    <div class="comment-meta">
+
+      <small class="comment-date">
+        {{ comment.date | date:'dd MMM yyyy, hh:mm a' }}
+      </small>
+
+      @if (comment.author === currentUser) {
 
       <button type="button"
-              (click)="cancelEdit()">
-        ✕
+              class="edit-button"
+              (click)="editComment(comment)">
+        ✎
       </button>
+
       }
-      @else
-      {
-        {{ comment.comment }}
-      }
-    </p>
+
+    </div>
+
   </div>
-  <div class="comment-meta">
-    <small class="comment-date">
-      {{ comment.date | date:'dd MMM yyyy, hh:mm a' }}
-    </small>
-    
-    @if (comment.author === currentUser) {
-    <button type="button"
-            class="edit-button"
-            (click)="editComment(comment)">
-      ✎
-    </button>
-    }
-  </div>
-</div>
+
   }
-}
+
+  }
+
+</div>

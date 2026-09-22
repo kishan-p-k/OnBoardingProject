@@ -2,15 +2,19 @@ import { Component, Input, inject, OnChanges } from '@angular/core';
 import { merge, Observable, Subject, tap } from 'rxjs';
 import { CommentService, Comment } from '../../Services/comment.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { LoginPageService } from '../../Services/login-page-service'
+import { LoginPageService } from '../../Services/login-page-service';
 import {
   FormsModule,
-  ReactiveFormsModule,
-  FormControl
+  ReactiveFormsModule
 } from '@angular/forms';
 
 @Component({
-  imports: [AsyncPipe, DatePipe, FormsModule, ReactiveFormsModule],
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   selector: 'app-comment-component',
   styleUrls: ['./comment-component.css'],
   templateUrl: './comment-component.html',
@@ -19,10 +23,14 @@ export class CommentComponent implements OnChanges {
 
   private readonly commentService = inject(CommentService);
   private readonly loginService = inject(LoginPageService);
+
+  @Input() bugRefId!: string;
+
   editingCommentId: string | null = null;
   editedValue = '';
 
-  @Input() bugRefId!: string;
+  showNewComment = false;
+  newComment = '';
 
   errorMessage = '';
 
@@ -30,7 +38,9 @@ export class CommentComponent implements OnChanges {
   private latestComments: Comment[] = [];
 
   comments$!: Observable<Comment[]>;
+
   currentUser = this.loginService.getCurrentUser()?.username;
+
   ngOnChanges(): void {
     if (!this.bugRefId) {
       this.errorMessage = 'Bug reference ID is missing';
@@ -48,11 +58,10 @@ export class CommentComponent implements OnChanges {
   }
 
   editComment(comment: Comment): void {
-
     if (comment.author !== this.currentUser) {
       return;
     }
-    console.log('Editing comment:', comment);
+
     this.editingCommentId = comment.reference_id;
     this.editedValue = comment.comment;
   }
@@ -63,31 +72,68 @@ export class CommentComponent implements OnChanges {
   }
 
   saveComment(comment: Comment): void {
-    const updatedComment: string = this.editedValue.trim();
+    const updatedComment = this.editedValue.trim();
 
     if (!updatedComment) {
       return;
     }
 
-    this.commentService.updateComment(comment.reference_id, updatedComment).subscribe({
-      next: (updated) => {
-        console.log('Comment updated successfully:', updated);
+    this.commentService
+      .updateComment(comment.reference_id, updatedComment)
+      .subscribe({
+        next: (updated) => {
+          const refreshedComments = this.latestComments.map(existing =>
+            existing.reference_id === comment.reference_id
+              ? {
+                ...existing,
+                comment: updatedComment,
+                date: updated.date
+              }
+              : existing
+          );
 
-        const refreshedComments = this.latestComments.map(existing =>
-          existing.reference_id === comment.reference_id
-            ? { ...existing, comment: updatedComment, date: updated.date }
-            : existing
-        );
+          this.updatedComments$.next(refreshedComments);
 
-        this.updatedComments$.next(refreshedComments);
-      },
-      error: (err) => {
-        console.error('Error updating comment:', err);
-      }
-    });
-    console.log('Saving comment:', comment.reference_id, {comment: updatedComment});
+          this.editingCommentId = null;
+          this.editedValue = '';
+        },
+        error: (err) => {
+          console.error('Error updating comment:', err);
+        }
+      });
+  }
 
-    this.editingCommentId = null;
-    this.editedValue = '';
+  addComment(): void {
+    const comment = this.newComment.trim();
+
+    if (!comment || !this.currentUser) {
+      return;
+    }
+
+    this.commentService
+      .CreateComment(
+        this.bugRefId,
+        comment,
+        this.currentUser
+      )
+      .subscribe({
+        next: (newComment) => {
+          this.updatedComments$.next([
+            ...this.latestComments,
+            newComment
+          ]);
+
+          this.newComment = '';
+          this.showNewComment = false;
+        },
+        error: (err) => {
+          console.error('Error creating comment:', err);
+        }
+      });
+  }
+
+  cancelNewComment(): void {
+    this.newComment = '';
+    this.showNewComment = false;
   }
 }

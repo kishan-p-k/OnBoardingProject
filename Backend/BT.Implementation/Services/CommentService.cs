@@ -59,6 +59,25 @@ namespace BT.Implementation.Services
                 _logger.LogError(ex, "Failed to update comment with reference ID: {ReferenceId}", reference_id);
                 throw;
             }
+
         }
-    }
+        public Comment CreateComment(string reference_id, string comment, string author)
+        {
+            _logger.LogInformation("Creating new comment");
+
+            try
+            {
+                Comment newcomment = _commentProvider.CreateComment(reference_id, comment, author);
+
+                _logger.LogInformation("Successfully updated comment with reference ID: {ReferenceId}", reference_id);
+
+                return newcomment;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to update comment with reference ID: {ReferenceId}", reference_id);
+                throw;
+            }
+        }
+        }
 }

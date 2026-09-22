@@ -128,4 +128,85 @@ public class CommentProvider : ICommentProvider
             throw;
         }
     }
+
+    public Comment CreateComment(string ref_id, string comment, string author)
+    {
+        _logger.LogInformation(
+            "Starting database operation to create new Comment.");
+
+        try
+        {
+            using SqlConnection connection =
+                _databaseConnection.CreateConnection();
+
+            using SqlCommand command =
+                new SqlCommand("CreateComment", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@ReferenceId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ref_id);
+            command.Parameters.Add("@Comment", SqlDbType.VarChar, 255).Value = comment;
+            command.Parameters.Add("@Author", SqlDbType.VarChar, 100).Value = author;
+
+
+            connection.Open();
+
+            _logger.LogDebug(
+                "Database connection opened. Executing stored procedure {ProcedureName}.",
+                "GetCommentByBug");
+
+            using SqlDataReader reader = command.ExecuteReader();
+
+            if (!reader.Read())
+            {
+                _logger.LogWarning(
+                    "Stored procedure returned no rows");
+                return null;
+            }
+
+            _logger.LogInformation(
+                "Stored procedure returned a bug row. Reading result.");
+
+            var newcomment = new Comment
+            {
+                reference_id = reader["reference_id"].ToString()!,
+
+                comment = reader["comment"].ToString()!,
+
+                author = reader["author"].ToString()!,
+
+                date = Convert.ToDateTime(
+                    reader["date"])
+            };
+
+            _logger.LogInformation(
+                "Comment successfully read after creation.");
+
+            return newcomment;
+        }
+        catch (FormatException ex)
+        {
+            _logger.LogError(
+                ex,
+                "Invalid");
+
+            throw;
+        }
+        catch (SqlException ex)
+        {
+            _logger.LogError(
+                ex,
+                "Database error while executing CreateComment+");
+
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error while creating comment.");
+
+            throw;
+        }
+    }
 }

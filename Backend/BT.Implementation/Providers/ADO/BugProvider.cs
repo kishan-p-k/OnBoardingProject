@@ -99,7 +99,14 @@ public class BugProvider : IBugProvider
                 new SqlCommand("GetFilteredBugs", connection);
             command.CommandType = CommandType.StoredProcedure;
             // Add parameters for filtering
-            command.Parameters.AddWithValue("@Keyword", (object?)filter.Keyword ?? DBNull.Value);
+            Guid? referenceId = string.IsNullOrEmpty(filter.reference_id)
+                ? null
+                : Guid.Parse(filter.reference_id);
+
+            command.Parameters.AddWithValue(
+                "@ReferenceId",
+                (object?)referenceId ?? DBNull.Value
+            ); command.Parameters.AddWithValue("@Keyword", (object?)filter.Keyword ?? DBNull.Value);
             command.Parameters.AddWithValue("@Status", (object?)filter.Status ?? DBNull.Value);
             command.Parameters.AddWithValue("@Priority", (object?)filter.Priority ?? DBNull.Value);
             command.Parameters.AddWithValue("@Assignee", (object?)filter.Assignee ?? DBNull.Value);
@@ -108,6 +115,7 @@ public class BugProvider : IBugProvider
             _logger.LogDebug(
                 "Database connection opened. Executing stored procedure {ProcedureName}.",
                 "GetFilteredBugs");
+
             using SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {

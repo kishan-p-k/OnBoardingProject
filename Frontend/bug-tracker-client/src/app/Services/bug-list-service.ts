@@ -10,8 +10,8 @@ export interface Bug {
   description: string;
   priority: string;
   status: string;
-  createdBy: number;
-  assignee: number | null;
+  createdBy: string;
+  assignee: string | null;
   createdDate: Date;
 }
 
@@ -55,6 +55,9 @@ export class BugListService {
     this.activeFilter = filter
 
     let params = new HttpParams();
+    if (filter.reference_id) {
+      params = params.set('reference_id', filter.reference_id);
+    }
     if (filter.keyword) {
       params = params.set('keyword', filter.keyword);
     }
