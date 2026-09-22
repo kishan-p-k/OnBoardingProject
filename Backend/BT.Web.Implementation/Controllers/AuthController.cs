@@ -61,7 +61,7 @@ public class AuthController : ControllerBase,IAuthController
     }
 
     [HttpPost("register")]
-    public User? CreateUser([FromBody] Users request)
+    public IActionResult CreateUser([FromBody] Users request)
     {
         _logger.LogInformation(
             "POST request received for user registration.");
@@ -80,18 +80,18 @@ public class AuthController : ControllerBase,IAuthController
                 return Conflict("A user with this email already exists.");
             }
 
-            //var userResponse = new
-            //{
-            //    user.Reference_id,
-            //    user.Username,
-            //    user.Mail
-            //};
+            var userResponse = new
+            {
+                user.Reference_id,
+                user.Username,
+                user.Mail
+            };
 
             _logger.LogInformation(
                 "Successfully created user {Reference_id}.",
                 user.Reference_id);
 
-            return user;
+            return Ok(userResponse);
         }
         catch (Exception ex)
         {
