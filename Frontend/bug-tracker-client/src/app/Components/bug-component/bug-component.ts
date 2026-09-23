@@ -319,6 +319,12 @@ export class BugComponent {
 
   }
 
+  clearSearch(): void {
+
+    this.assigneeControl.setValue('', { emitEvent: false });
+    this.showAssigneeDropdown = false;
+
+  }
 
   // =========================
   // GET BUG

@@ -10,7 +10,7 @@
   .bug-toolbar select,
   .bug-toolbar input,
   .bug-toolbar button {
-    height: 42px;
+    height: 30px;
     box-sizing: border-box;
     font-size: 15px;
     border-radius: 6px;
@@ -81,3 +81,18 @@
       order: unset;
     }
 }
+
+
+
+
+.user-option {
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+  .user-option:hover {
+    background: #eff6ff;
+    color: #1d4ed8;
+  }

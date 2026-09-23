@@ -41,7 +41,8 @@
       <input type="text"
              [formControl]="assigneeControl"
              placeholder="Search user..."
-             (focus)="showAssigneeDropdown = true" />
+             (focus)="showAssigneeDropdown = true"
+             (blur)="clearSearch()"/>
 
       @if (showAssigneeDropdown) {
 
@@ -52,7 +53,7 @@
         @if (users.length > 0) {
 
         @for (user of users; track user) {
-        <div class="user-option" (click)="selectAssignee(user)">
+        <div class="user-option" (mousedown)="selectAssignee(user)">
           {{ user }}
         </div>
         }
