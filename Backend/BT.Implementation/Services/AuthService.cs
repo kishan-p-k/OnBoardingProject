@@ -2,6 +2,8 @@ using BT.Models;
 using BT;
 using BT.Implementation.Providers;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace BT.Implementation.Services;
 
@@ -36,7 +38,16 @@ public class AuthService : IAuthService
 
             // Verify password - in production, this should use proper hashing comparison
             // For now, basic string comparison (WARNING: NOT SECURE - for demo only)
-            if (!user.Password.Equals(password, StringComparison.Ordinal))
+            //if (!user.Password.Equals(password, StringComparison.Ordinal))
+            //{
+            //    _logger.LogWarning(
+            //        "Authentication failed: password mismatch for user {Username}.",
+            //        username);
+            //    return null;
+            //}
+
+            var hasher = new PasswordHasher<object>();
+            if (hasher.VerifyHashedPassword(null!, user.Password, password) == PasswordVerificationResult.Failed)
             {
                 _logger.LogWarning(
                     "Authentication failed: password mismatch for user {Username}.",
@@ -65,7 +76,11 @@ public class AuthService : IAuthService
             "Starting user registration for {Mail}.", mail);
         try
         {
-            Users? user = _authProvider.CreateUser(username, mail, password);
+            var hasher = new PasswordHasher<object>();
+
+            string hashedPassword = hasher.HashPassword(null!, password);
+          
+            Users? user = _authProvider.CreateUser(username, mail, hashedPassword);
 
             if (user == null)
             {
