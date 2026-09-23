@@ -5,7 +5,7 @@ using BT.Web;
 namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
-[Route("api/userauth")]
+[Route("userauth")]
 public class AuthController : ControllerBase,IAuthController
 {
     private readonly IAuthService _authService;
@@ -18,45 +18,43 @@ public class AuthController : ControllerBase,IAuthController
         _logger = logger;
     }
 
-    [HttpGet("{Mail}/{password}")]
-    public IActionResult Login(string Mail, string password)
+    [HttpPost("login")]
+    public UserRequestModel? Login([FromBody] Users request)
     {
         _logger.LogInformation(
-            "GET request received for user login.");
+            "POST request received for user login.");
 
         try
         {
-            Users? user = _authService.GetUserForLogin(Mail, password);
+            UserRequestModel? user = _authService.GetUserForLogin(request.Mail, request.Password);
 
             if (user == null)
             {
-                return Unauthorized("Invalid credentials.");
+                return null;
             }
 
             // Return user without password for security
-            var userResponse = new
+            UserRequestModel userResponse = new UserRequestModel
             {
-                user.Reference_id,
-                user.Username,
-                user.Mail
+                Reference_id = user.Reference_id,
+                Username = user.Username,
+                Mail = user.Mail
             };
 
             _logger.LogInformation(
                 "Successfully authenticated user {Reference_id}.",
                 user.Reference_id);
 
-            return Ok(userResponse);
+            return userResponse;
         }
         catch (Exception ex)
         {
             _logger.LogError(
                 ex,
                 "Unexpected error while processing GET /userauth/{Mail}.",
-                Mail);
+                request.Mail);
 
-            return StatusCode(
-                StatusCodes.Status500InternalServerError,
-                "An unexpected error occurred.");
+            return null;
         }
     }
 

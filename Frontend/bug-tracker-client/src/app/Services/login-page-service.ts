@@ -12,7 +12,7 @@ export interface User {
   providedIn: 'root'
 })
 export class LoginPageService {
-  private readonly apiUrl = 'http://localhost:5135/api/userauth';
+  private readonly apiUrl = 'http://localhost:5135/userauth';
   private currentUser: User | null = null;
   constructor(private readonly http: HttpClient) { }
 
@@ -35,14 +35,17 @@ export class LoginPageService {
     return null;
   }
 
-  login(usernameOrMail: string, password: string): Observable<User | null>
+  login(mail: string, password: string): Observable<User | null>
   {
-    return this.http.get<User | null>(`${this.apiUrl}/${usernameOrMail}/${password}`);
+    return this.http.post<User | null>(`${this.apiUrl}/login`,{
+      mail,
+      password
+    });
   }
 
   register(username: string, mail: string, password: string): Observable<User | null>
   {
-    return this.http.post<User | null>(`${this.apiUrl}/register`, {
+    return this.http.post<User | null>(`${this.apiUrl}/register`,{
       username,
       mail,
       password

@@ -18,7 +18,7 @@ public class AuthService : IAuthService
         _logger = logger;
     }
 
-    public Users? GetUserForLogin(string username, string password)
+    public UserRequestModel? GetUserForLogin(string username, string password)
     {
         _logger.LogInformation(
             "Starting authentication for user.");
@@ -48,7 +48,12 @@ public class AuthService : IAuthService
                 "Successfully authenticated user {Reference_id}.",
                 user.Reference_id);
 
-            return user;
+            return new UserRequestModel
+            {
+                Reference_id = user.Reference_id,
+                Username = user.Username,
+                Mail = user.Mail
+            };
         }
         catch (Exception ex)
         {

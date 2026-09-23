@@ -13,7 +13,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer(); // ADDED
 builder.Services.AddSwaggerGen();            // ADDED
 
-
 // Register database
 builder.Services.AddSingleton<DatabaseConnection>();
 
