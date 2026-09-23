@@ -5,7 +5,7 @@ using BT.Web;
 namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
-[Route("api/userauth")]
+[Route("userauth")]
 public class AuthController : ControllerBase,IAuthController
 {
     private readonly IAuthService _authService;

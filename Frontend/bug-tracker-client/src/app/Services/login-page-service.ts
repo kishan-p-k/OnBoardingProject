@@ -12,7 +12,7 @@ export interface User {
   providedIn: 'root'
 })
 export class LoginPageService {
-  private readonly apiUrl = 'http://localhost:5135/api/userauth';
+  private readonly apiUrl = 'http://localhost:5135/userauth';
   private currentUser: User | null = null;
   constructor(private readonly http: HttpClient) { }
 

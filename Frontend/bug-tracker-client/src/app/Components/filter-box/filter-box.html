@@ -1,20 +1,59 @@
 <div class="bug-toolbar">
-
-  <select [(ngModel)]="filter.status" (change)="applyFilter()">
-    <option value="">Statuses</option>
+  <label for="status">Status</label>
+  <select id="status" [(ngModel)]="filter.status" (change)="applyFilter()">
+    <option value="">Select All</option>
     <option value="Open">Open</option>
     <option value="In Progress">In Progress</option>
     <option value="Closed">Closed</option>
     <option value="Resolved">Resolved</option>
   </select>
 
-  <select [(ngModel)]="filter.priority" (change)="applyFilter()">
-    <option value="">Priorities</option>
+  <label for="priority">Priority</label>
+  <select id="priority" [(ngModel)]="filter.priority" (change)="applyFilter()">
+    <option value="">Select All</option>
     <option value="Low">Low</option>
     <option value="Medium">Medium</option>
     <option value="High">High</option>
     <option value="Critical">Critical</option>
   </select>
+
+  <label for="assignee">Assignee</label>
+  <div class="assignee-search">
+
+    <input type="text"
+           id="assignee"
+           [formControl]="assigneeControl"
+           placeholder="Search user..."
+           (focus)="showAssigneeDropdown = true"
+           (blur)="clearSearch()"/>
+
+    @if (showAssigneeDropdown) {
+
+    <div class="assignee-dropdown">
+
+      @if (assigneeValue$ | async; as users) {
+
+      @if (users.length > 0) {
+
+      @for (user of users; track user) {
+      <div class="user-option" (mousedown)="selectAssignee(user)">
+        {{ user }}
+      </div>
+      }
+
+      } @else {
+      <p>No users found</p>
+      }
+
+      }
+
+    </div>
+
+    }
+
+  </div>
+
+
 
   <input type="text"
          [formControl]="keywordControl"

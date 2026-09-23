@@ -127,5 +127,8 @@ export class CreateBugComponent {
   onCancel(): void {
     this.router.navigate(['/userbugs', this.user?.reference_id]);
   }
+  clearSearch(): void {
+    this.assigneeControl.setValue('', { emitEvent: false });
+    this.showAssigneeDropdown = false;
+  }
 }
-1

@@ -153,7 +153,8 @@
           <input type="text"
                  [formControl]="assigneeControl"
                  placeholder="Search user..."
-                 (focus)="showAssigneeDropdown = true">
+                 (focus)="showAssigneeDropdown = true"
+                 (blur)="clearSearch()"/>
 
 
           @if (showAssigneeDropdown) {
@@ -167,7 +168,7 @@
             @for (user of users; track user) {
 
             <div class="user-option"
-                 (click)="selectAssignee(user, bug.reference_id)">
+                 (mousedown)="selectAssignee(user, bug.reference_id)">
               {{ user }}
             </div>
 
