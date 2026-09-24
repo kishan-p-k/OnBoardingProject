@@ -4,7 +4,7 @@ import {
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, shareReplay, tap } from 'rxjs/operators';
-import { LoginPageService, User } from '../../Services/login-page-service';
+import { LoginPageService, User, LoginResponse } from '../../Services/login-page-service';
 
 
 @Component({
@@ -31,7 +31,7 @@ export class LoginPage {
   });
 
 
-  user$: Observable<User | null> | null = null;
+  user$: Observable<LoginResponse | null> | null = null;
   errorMessage = '';
 
   constructor(private readonly loginService: LoginPageService, private readonly router: Router) { }
@@ -62,12 +62,13 @@ export class LoginPage {
     const password = this.password.value ?? '';
 
     this.user$ = this.loginService.login(email, password).pipe(
-      tap((user) => {
-        console.log('Login successful:', user);
+      tap((response) => {
+        if (!response) return;
+        console.log('Login successful:', response);
 
-        this.loginService.setCurrentUser(user);
-
-        this.router.navigate(['/userbugs', user?.reference_id]);
+        this.loginService.setCurrentUser(response.user);
+        sessionStorage.setItem('token', response.token);
+        this.router.navigate(['/userbugs', response.user.reference_id]);
       }),
       
       catchError((error) => {
@@ -77,7 +78,7 @@ export class LoginPage {
       }),
       shareReplay(1)
     );
-    this.user$.subscribe();
+    this.user$?.subscribe();
 
   }
   goToSignup(): void {
