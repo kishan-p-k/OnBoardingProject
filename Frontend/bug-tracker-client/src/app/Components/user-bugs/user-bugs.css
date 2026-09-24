@@ -1,17 +1,8 @@
-/*find ^(\s*)([^@\s][^{]*?)\s*\{
-replace $1:host $2 {*//*}*/
 
-
-
-
-
-
-
-/*  :host {
+  :host {
     display: block;
     width: 100%;
-  }
-*/
+
 
     :host .bug-list-container {
       width: 100%;
