@@ -3,6 +3,11 @@
   display: block;
   width: 100%;
 
+  .header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   .bug-list-container {
     width: 100%;
@@ -12,14 +17,14 @@
     box-sizing: border-box;
   }
   /* Top action buttons */
- .bug-actions {
+  .bug-actions {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
     margin: 20px 0 30px;
   }
 
-  .bug-actions button {
+    .bug-actions button {
       height: 42px;
       padding: 0 20px;
       border: none;
@@ -33,21 +38,22 @@
     margin: 0 0 30px;
   }
 
- .bug-filter {
+  .bug-filter {
     margin-bottom: 20px;
   }
 
-.bug-filter h2 {
+    .bug-filter h2 {
       margin: 0;
     }
   /* Bug grid */
- .bug-grid {
+  .bug-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 20px;
   }
- .bug-component {
+
+  .bug-component {
     display: block;
     width: 100%;
     min-height: 80px;
@@ -63,25 +69,27 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-    :host .bug-component:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    }
-.bug-component-header {
+  :host .bug-component:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .bug-component-header {
     display: flex;
     margin-bottom: 12px;
   }
-.bug-title {
+
+  .bug-title {
     overflow-wrap: break-word;
   }
 
- .bug-badges {
+  .bug-badges {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
 
- .badge {
+  .badge {
     display: inline-block;
     padding: 4px 10px;
     border-radius: 12px;
@@ -91,17 +99,19 @@
     background: #eee;
     color: #333;
   }
-.status-badge.status-open {
+
+  .status-badge.status-open {
     background: #fdecea;
     color: #c0392b;
   }
 
- .status-badge.status-in-progress {
+  .status-badge.status-in-progress {
     background: #fff4e5;
     color: #b35c00;
   }
- .status-badge.status-resolved,
- .status-badge.status-closed {
+
+  .status-badge.status-resolved,
+  .status-badge.status-closed {
     background: #e6f4ea;
     color: #1e7e34;
   }
@@ -126,36 +136,39 @@
       padding: 25px 30px;
     }
 
-     .bug-grid {
+    .bug-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   /* Mobile */
   @media (max-width: 650px) {
- .bug-list-container {
+    .bug-list-container {
       padding: 20px 15px;
     }
 
- .bug-actions {
+    .bug-actions {
       justify-content: stretch;
     }
- .bug-actions button {
+
+      .bug-actions button {
         flex: 1;
         padding: 0 12px;
       }
- .bug-list-container h1 {
+
+    .bug-list-container h1 {
       font-size: 24px;
     }
- .bug-filter h2 {
+
+    .bug-filter h2 {
       font-size: 20px;
     }
 
- .bug-grid {
+    .bug-grid {
       grid-template-columns: 1fr;
       gap: 15px;
     }
 
- .bug-component {
+    .bug-component {
       min-height: 60px;
       padding: 16px;
       font-size: 16px;

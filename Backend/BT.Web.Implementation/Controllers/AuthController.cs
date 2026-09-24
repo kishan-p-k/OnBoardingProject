@@ -63,7 +63,7 @@ public class AuthController : ControllerBase,IAuthController
                 return BadRequest(ModelState);
             }
 
-            Users? user = _authService.CreateUser(request.Username, request.Mail, request.Password);
+            Users? user = _authService.CreateUser(request.Username, request.Mail, request.Password,request.role);
 
             if (user == null)
             {

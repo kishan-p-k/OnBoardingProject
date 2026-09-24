@@ -43,7 +43,7 @@ public class AuthProvider : IAuthProvider
                "Database connection opened. Executing stored procedure {ProcedureName}.",
                "GetUserForLogin");
                 using SqlDataReader reader = command.ExecuteReader();
-                Users user = null;
+                Users? user = null;
                 if (reader.Read())
                 {
                     user = new Users
@@ -74,7 +74,7 @@ public class AuthProvider : IAuthProvider
         }
     }
 
-    public Users? CreateUser(string username, string mail, string password)
+    public Users? CreateUser(string username, string mail, string password, string role)
     {
         _logger.LogInformation(
             "Starting database operation to create a new user.");
@@ -105,6 +105,12 @@ public class AuthProvider : IAuthProvider
                 200
                 ).Value = password;
 
+                command.Parameters.Add(
+                "@Role",
+                SqlDbType.VarChar,
+                50
+                ).Value = role;
+
                 connection.Open();
                 _logger.LogDebug(
                "Database connection opened. Executing stored procedure {ProcedureName}.",
@@ -117,7 +123,8 @@ public class AuthProvider : IAuthProvider
                     {
                         Reference_id = reader["reference_id"].ToString(),
                         Username = reader["username"].ToString(),
-                        Mail = reader["mail"].ToString()
+                        Mail = reader["mail"].ToString(),
+                        role = reader["role"].ToString()
                     };
                     _logger.LogInformation(
                 "Successfully created user in the database.");

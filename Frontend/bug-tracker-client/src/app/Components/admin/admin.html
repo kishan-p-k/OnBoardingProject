@@ -1,0 +1,53 @@
+<app-navigation />
+
+
+<div class="section-header">
+  <h3>Users</h3>
+
+  <div class="new-user">
+    <button type="button" (click)="createNewUser()">
+      Create new User
+    </button>
+  </div>
+</div>
+
+<div class="Users">
+
+  @if (users| async; as users) {
+
+  @if (users.length === 0 ) {
+  <p>No users found.</p>
+  }
+
+  @if (users.length > 0) {
+
+  <div class="user-grid">
+
+    @for (user of users;track user.reference_id) {
+
+    <a class="user-component">
+
+      <div class="user-component-header">
+        <span class="user-title">
+          {{ user.username }}
+        </span>
+      </div>
+
+      <div class="user-badges">
+        <span class="badge role-badge">{{ user.role ?? '-' }}</span>
+      </div>
+
+      <div class="user-email">
+        {{ user.mail ?? '-' }}
+      </div>
+
+    </a>
+
+    }
+
+  </div>
+  }
+
+  }
+
+</div>

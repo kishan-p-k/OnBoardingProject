@@ -99,6 +99,7 @@ export class FilterBox implements OnChanges {
   }
 
   clearFilter(): void {
+
     this.keywordControl.setValue('', { emitEvent: false });
 
     this.filter = {
@@ -112,6 +113,9 @@ export class FilterBox implements OnChanges {
     this.applyFilter();
   }
   clearSearch(): void {
+    if (this.filter.assignee) {
+      return;
+    }
     this.assigneeControl.setValue('', { emitEvent: false });
     this.showAssigneeDropdown = false;
   }

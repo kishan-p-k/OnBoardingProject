@@ -5,4 +5,5 @@ namespace BT.Implementation.Providers;
 public interface IUserProvider
 {
     public Task<List<string>> UserSearch(string value);
+    public List<UserRequestModel> GetAllUsers();
 }

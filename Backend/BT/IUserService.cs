@@ -5,4 +5,5 @@ namespace BT;
 public interface IUserService
 {
     public Task<List<string>> UserSearch(string value);
+    public List<UserRequestModel> GetAllUsers();
 }

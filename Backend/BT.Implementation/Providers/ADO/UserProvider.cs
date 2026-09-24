@@ -18,7 +18,47 @@ public class UserProvider : IUserProvider
         _databaseConnection = databaseConnection;
         _logger = logger;
     }
-
+    public List<UserRequestModel> GetAllUsers()
+    {
+        _logger.LogInformation(
+            "Starting database operation to retrieve all users.");
+        List<UserRequestModel> users = new List<UserRequestModel>();
+        try
+        {
+            using SqlConnection connection =
+                _databaseConnection.CreateConnection();
+            using SqlCommand command =
+                new SqlCommand("GetAllUsers", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            connection.Open();
+            _logger.LogDebug(
+                "Database connection opened. Executing stored procedure {ProcedureName}.",
+                "GetAllUsers");
+            using SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                UserRequestModel user = new UserRequestModel
+                {
+                    Reference_id = reader["reference_id"].ToString()!,
+                    Username = reader["username"].ToString()!,
+                    Mail = reader["mail"].ToString()!,
+                    role = reader["role"].ToString()!
+                };
+                users.Add(user);
+            }
+            _logger.LogInformation(
+                "Successfully retrieved {UserCount} users from the database.",
+                users.Count);
+            return users;
+        }
+        catch (SqlException ex)
+        {
+            _logger.LogError(
+                ex,
+                "Database error while retrieving users.");
+            throw;
+        }
+    }
     public async Task<List<string>> UserSearch(string value)
     {
         _logger.LogInformation(

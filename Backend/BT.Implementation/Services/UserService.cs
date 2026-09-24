@@ -39,5 +39,26 @@ namespace BT.Implementation.Services
                 throw;
             }
         }
+
+        public List<UserRequestModel> GetAllUsers()
+        {
+            _logger.LogInformation(
+                "Fetching all users from the database.");
+            try
+            {
+                List<UserRequestModel> users = _userProvider.GetAllUsers();
+                _logger.LogInformation(
+                    "Successfully fetched {UserCount} users",
+                    users.Count);
+                return users;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "Error fetching all users");
+                throw;
+            }
+        }
     }
 }

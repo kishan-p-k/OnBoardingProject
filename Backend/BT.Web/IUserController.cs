@@ -6,4 +6,5 @@ namespace BT.Web;
 public interface IUserController
 {
     Task<List<string>> UserSearch();
+    List<UserRequestModel> GetAllUsers();
 }

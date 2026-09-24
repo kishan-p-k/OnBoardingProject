@@ -48,12 +48,13 @@ export class LoginPageService {
     });
   }
 
-  register(username: string, mail: string, password: string): Observable<User | null>
+  register(username: string, mail: string, password: string, role:string): Observable<User | null>
   {
     return this.http.post<User | null>(`${this.apiUrl}/register`,{
       username,
       mail,
-      password
+      password,
+      role
     });
   }
   logout() {

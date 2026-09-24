@@ -20,6 +20,11 @@ export const authGuard: CanActivateFn = (route, state) => {
       return router.createUrlTree(['/bug']);
     }
   }
+  if (route.routeConfig?.path === 'admin') {
+    if (user.role !== 'Admin') {
+      return router.createUrlTree(['/login']);
+    }
+  }
 
   return true;
 };

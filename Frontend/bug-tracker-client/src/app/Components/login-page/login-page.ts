@@ -69,6 +69,11 @@ export class LoginPage {
         this.loginService.setCurrentUser(response.user);
         sessionStorage.setItem('token', response.token);
         this.router.navigate(['/userbugs', response.user.reference_id]);
+        if (response.user.role === 'Admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/userbugs', response.user.reference_id]);
+        }
       }),
       
       catchError((error) => {
