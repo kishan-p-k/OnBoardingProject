@@ -1,3 +1,5 @@
+namespace BT.Models;
+
 public class BugFilter
 {
     public string? reference_id {  get; set; }

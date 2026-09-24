@@ -6,5 +6,5 @@ public interface IAuthProvider
 {
     public Users? GetUserForLogin(string Mail);
 
-    public Users? CreateUser(string username, string mail, string password,string role);
+    public CreateUserResult CreateUser(string username, string mail, string password,string role);
 }

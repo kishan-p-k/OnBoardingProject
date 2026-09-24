@@ -15,7 +15,12 @@ export class Navigation {
   private loginService = inject(LoginPageService);
   private user = this.loginService.getCurrentUser();
   goToDashboard() {
-    this.router.navigate(['/userbugs', this.user?.reference_id]);
+    if (this.user?.role === 'Admin') {
+      this.router.navigate(['/admin']);
+    }
+    else {
+      this.router.navigate(['/userbugs', this.user?.reference_id]);
+    }
   }
 
   goBack() {
