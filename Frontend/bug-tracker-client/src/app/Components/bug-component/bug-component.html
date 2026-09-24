@@ -113,10 +113,9 @@
         <select [value]="bug.status"
                 (change)="fieldChanged($event, bug.reference_id, 'status')">
 
-          <option value="Open">Open</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Resolved">Resolved</option>
-          <option value="Closed">Closed</option>
+          @for (status of getValidStatuses(bug.status); track status) {
+          <option [value]="status">{{ status }}</option>
+          }
 
         </select>
 

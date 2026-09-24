@@ -6,12 +6,14 @@ import { UserBugsComponent } from './Components/user-bugs/user-bugs';
 import { CreateBugComponent } from './Components/create-bug/create-bug';
 import { authGuard } from './auth-guard'
 import { CreateUser } from './Components/create-user/create-user';
+import { Profile } from './Components/profile/profile'; 
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginPage },
 
   { path: 'signup', component: CreateUser },
+  { path: 'profile/:ref_id', component: Profile, canActivate: [authGuard] },
 
   { path: 'bug/create', component: CreateBugComponent, canActivate: [authGuard] },
 

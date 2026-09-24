@@ -36,9 +36,25 @@
         font-weight: bold;
         color: white;
       }
+
+      .navigation button:nth-child(3) {
+        margin-left: auto;
+      }
+      /* Profile button */
+      .navigation button:nth-child(3) {
+        margin-left: auto;
+      }
+
+        .navigation button:nth-child(3)::before {
+          content: "♙";
+          margin-right: 7px;
+          font-size: 21px;
+          font-weight: bold;
+          color: white;
+        }
       /* Logout button */
       .navigation button:last-child {
-        margin-left: auto;
+        margin-left: 0;
       }
 
         .navigation button:last-child::before {
@@ -46,8 +62,4 @@
           margin-right: 7px;
           font-size: 18px;
         }
-      /* Hover effect */
-      .navigation button:hover {
-        background-color: lightgrey;
-      }
 }

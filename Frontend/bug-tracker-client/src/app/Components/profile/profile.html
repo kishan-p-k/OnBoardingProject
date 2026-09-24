@@ -1,0 +1,46 @@
+
+<app-navigation></app-navigation>
+
+<div class="profile-page">
+
+  <div class="profile-header">
+    <div class="avatar">
+      {{ user?.username?.charAt(0)?.toUpperCase() }}
+    </div>
+
+    <div>
+      <h1>{{ user?.username }}</h1>
+      <p>{{ user?.mail }}</p>
+    </div>
+  </div>
+
+  <div class="profile-card">
+
+    <div class="card-header">
+      <h2>Profile Information</h2>
+      <p>Your account details</p>
+    </div>
+
+    <div class="profile-details">
+
+      <div class="detail-item">
+        <span class="detail-label">Username</span>
+        <span class="detail-value">{{ user?.username }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Email</span>
+        <span class="detail-value">{{ user?.mail }}</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Role</span>
+        <span class="role-badge">{{ user?.role }}</span>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>

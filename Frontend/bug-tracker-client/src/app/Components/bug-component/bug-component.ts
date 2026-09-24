@@ -32,7 +32,7 @@ import {
 
 import { CommentComponent } from '../comment-component/comment-component';
 import { Navigation } from '../navigation/navigation';
-
+import { LoginPageService } from "../../Services/login-page-service"; 
 export interface Bug {
   reference_id: string;
   title: string;
@@ -67,13 +67,11 @@ export class BugComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly bugService = inject(BugService);
   private readonly userService = inject(UserService);
+  private readonly loginPageService = inject(LoginPageService);
   private readonly router = inject(Router);
   private readonly elementRef = inject(ElementRef);
 
-
-  // =========================
-  // ASSIGNEE SEARCH
-  // =========================
+  role = this.loginPageService.getCurrentUser()?.role;
 
   assigneeControl = new FormControl('', {
     nonNullable: true
@@ -97,25 +95,15 @@ export class BugComponent {
   );
 
 
-  // =========================
-  // EDITING
-  // =========================
 
   editingField: string | null = '';
 
   editedValue = '';
 
 
-  // =========================
-  // UPDATED BUG
-  // =========================
 
   private readonly updatedBug$ = new Subject<Bug>();
 
-
-  // =========================
-  // DELETE BUG
-  // =========================
 
   deleteBug(ref_id: string): void {
 
@@ -326,10 +314,6 @@ export class BugComponent {
 
   }
 
-  // =========================
-  // GET BUG
-  // =========================
-
   bug$ = merge(
 
     this.route.paramMap.pipe(
@@ -353,5 +337,34 @@ export class BugComponent {
     this.updatedBug$
 
   );
+  getValidStatuses(currentStatus: string): string[] {
+    if (this.role === 'Developer') {
+      switch (currentStatus) {
+        case 'Open':
+          return ['Open', 'In Progress'];
+
+        case 'In Progress':
+          return ['In Progress', 'Resolved'];
+
+        default:
+          return [currentStatus];
+      }
+    }
+
+    if (this.role === 'Tester') {
+      switch (currentStatus) {
+        case 'Resolved':
+          return ['Resolved', 'Closed'];
+
+        case 'Closed':
+          return ['Closed', 'Open'];
+
+        default:
+          return [currentStatus];
+      }
+    }
+
+    return [currentStatus];
+  }
 
 }

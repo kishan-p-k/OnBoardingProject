@@ -21,6 +21,9 @@ export class Navigation {
   goBack() {
     this.location.back();
   }
+  profile() {
+    this.router.navigate(['/profile', this.user?.reference_id]);
+  }
 
   logout() {
     this.loginService.logout();
