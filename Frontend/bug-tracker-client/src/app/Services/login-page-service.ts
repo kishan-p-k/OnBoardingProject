@@ -8,6 +8,10 @@ export interface User {
   mail: string;
   role: string;
 }
+export interface LoginResponse {
+  user: User;
+  token: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -36,9 +40,9 @@ export class LoginPageService {
     return null;
   }
 
-  login(mail: string, password: string): Observable<User | null>
+  login(mail: string, password: string): Observable<LoginResponse | null>
   {
-    return this.http.post<User | null>(`${this.apiUrl}/login`,{
+    return this.http.post<LoginResponse | null>(`${this.apiUrl}/login`,{
       mail,
       password
     });
