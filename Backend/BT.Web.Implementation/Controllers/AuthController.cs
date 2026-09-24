@@ -19,34 +19,25 @@ public class AuthController : ControllerBase,IAuthController
     }
 
     [HttpPost("login")]
-    public UserRequestModel? Login([FromBody] Users request)
+    public LoginResponseModel? Login([FromBody] Users request)
     {
         _logger.LogInformation(
             "POST request received for user login.");
 
         try
         {
-            UserRequestModel? user = _authService.GetUserForLogin(request.Mail, request.Password);
+            LoginResponseModel? loginResponse = _authService.GetUserForLogin(request.Mail, request.Password);
 
-            if (user == null)
+            if (loginResponse == null)
             {
                 return null;
             }
 
-            // Return user without password for security
-            UserRequestModel userResponse = new UserRequestModel
-            {
-                Reference_id = user.Reference_id,
-                Username = user.Username,
-                Mail = user.Mail,
-                role = user.role
-            };
-
             _logger.LogInformation(
                 "Successfully authenticated user {Reference_id}.",
-                user.Reference_id);
+                loginResponse.User.Reference_id);
 
-            return userResponse;
+            return loginResponse;
         }
         catch (Exception ex)
         {
