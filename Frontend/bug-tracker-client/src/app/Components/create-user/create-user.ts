@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LoginPageService } from '../../Services/login-page-service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -46,7 +47,11 @@ export class CreateUser {
 
   errorMessage = '';
 
-  constructor(private readonly loginService: LoginPageService, private readonly router: Router) { }
+  constructor(
+    private readonly loginService: LoginPageService,
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef
+  ) { }
 
   passwordMatchValidator(
     form: AbstractControl
@@ -63,7 +68,6 @@ export class CreateUser {
   register() {
     if (this.registerForm.invalid) return;
 
-    this.errorMessage = '';
     const username = this.username.value ?? '';
     const email = this.email.value ?? '';
     const password = this.newPassword.value ?? '';
@@ -71,12 +75,11 @@ export class CreateUser {
 
     this.loginService.register(username, email, password, role).pipe(
       tap((user) => {
-        this.loginService.setCurrentUser(user);
         this.router.navigate(['/admin']);
       }),
       catchError((error) => {
-        console.error('Registration error:', error);
-        this.errorMessage = 'Failed to register. Please try again.';
+        this.errorMessage = error.error;
+        this.cdr.detectChanges();
         return of(null);
       })
     ).subscribe();

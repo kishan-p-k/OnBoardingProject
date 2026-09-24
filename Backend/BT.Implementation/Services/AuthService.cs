@@ -1,9 +1,7 @@
 using BT.Models;
-using BT;
 using BT.Implementation.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
-
 
 namespace BT.Implementation.Services;
 
@@ -20,10 +18,13 @@ public class AuthService : IAuthService
         _logger = logger;
     }
 
-    public UserRequestModel? GetUserForLogin(string username, string password)
+    public UserRequestModel? GetUserForLogin(
+        string username,
+        string password)
     {
         _logger.LogInformation(
             "Starting authentication for user.");
+
         try
         {
             Users? user = _authProvider.GetUserForLogin(username);
@@ -33,25 +34,21 @@ public class AuthService : IAuthService
                 _logger.LogWarning(
                     "Authentication failed: user not found for username/email {Username}.",
                     username);
+
                 return null;
             }
 
-            // Verify password - in production, this should use proper hashing comparison
-            // For now, basic string comparison (WARNING: NOT SECURE - for demo only)
-            //if (!user.Password.Equals(password, StringComparison.Ordinal))
-            //{
-            //    _logger.LogWarning(
-            //        "Authentication failed: password mismatch for user {Username}.",
-            //        username);
-            //    return null;
-            //}
-
             var hasher = new PasswordHasher<object>();
-            if (hasher.VerifyHashedPassword(null!, user.Password, password) == PasswordVerificationResult.Failed)
+
+            if (hasher.VerifyHashedPassword(
+                null!,
+                user.Password,
+                password) == PasswordVerificationResult.Failed)
             {
                 _logger.LogWarning(
                     "Authentication failed: password mismatch for user {Username}.",
                     username);
+
                 return null;
             }
 
@@ -72,41 +69,56 @@ public class AuthService : IAuthService
             _logger.LogError(
                 ex,
                 "Error occurred during authentication.");
+
             throw;
         }
     }
 
-    public Users? CreateUser(string username, string mail, string password,string role)
+    public CreateUserResult CreateUser(
+        string username,
+        string mail,
+        string password,
+        string role)
     {
         _logger.LogInformation(
-            "Starting user registration for {Mail}.", mail);
+            "Starting user registration for {Mail}.",
+            mail);
+
         try
         {
             var hasher = new PasswordHasher<object>();
 
-            string hashedPassword = hasher.HashPassword(null!, password);
-          
-            Users? user = _authProvider.CreateUser(username, mail, hashedPassword,role);
+            string hashedPassword =
+                hasher.HashPassword(null!, password);
 
-            if (user == null)
+            CreateUserResult result =
+                _authProvider.CreateUser(
+                    username,
+                    mail,
+                    hashedPassword,
+                    role);
+
+            if (result.User == null)
             {
                 _logger.LogWarning(
-                    "User registration failed for {Mail}. Mail may already be in use.",
+                    "User registration failed for {Mail}.",
                     mail);
-                return null;
+
+                return result;
             }
 
             _logger.LogInformation(
                 "Successfully registered user {Reference_id}.",
-                user.Reference_id);
+                result.User.Reference_id);
 
-            return user;
+            return result;
         }
         catch (Exception ex)
         {
             _logger.LogError(
                 ex,
                 "Error occurred during user registration.");
+
             throw;
         }
     }

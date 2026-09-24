@@ -1,7 +1,6 @@
 <div class="Register-container">
 
   <div class="Register-box">
-
     <h1>Register</h1>
 
     <form [formGroup]="registerForm" (ngSubmit)="register()">
@@ -76,14 +75,20 @@
       <div class="form-group">
         <label for="role">Role</label>
         <label class="radio-option">
-          <input type="radio" name="role" value="Developer"formControlName="role">
+          <input type="radio" name="role" value="Developer" formControlName="role">
           Developer
         </label>
 
         <label class="radio-option">
-          <input type="radio" name="role" value="Tester"formControlName="role">
+          <input type="radio" name="role" value="Tester" formControlName="role">
           Tester
         </label>
+      </div>
+
+      <div>
+        @if (errorMessage) {
+        <p class="error-message">{{ errorMessage }}</p>
+        }
       </div>
       <button type="submit" [disabled]="registerForm.invalid"> Register </button>
 

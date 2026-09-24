@@ -72,24 +72,28 @@ public class AuthController : ControllerBase,IAuthController
                 return BadRequest(ModelState);
             }
 
-            Users? user = _authService.CreateUser(request.Username, request.Mail, request.Password,request.role);
+            CreateUserResult? result = _authService.CreateUser(request.Username, request.Mail, request.Password,request.role);
 
-            if (user == null)
+            if (result.Error == "USERNAME_EXISTS")
             {
-                return Conflict("A user with this email already exists.");
+                return Conflict("A user with this username already exists.");
+            }
+            else if (result.Error == "MAIL_EXISTS")
+            {
+                return BadRequest("The specified email already exists.");
             }
 
             var userResponse = new
             {
-                user.Reference_id,
-                user.Username,
-                user.Mail,
-                user.role
+                result.User.Reference_id,
+                result.User.Username,
+                result.User.Mail,
+                result.User.role
             };
 
             _logger.LogInformation(
                 "Successfully created user {Reference_id}.",
-                user.Reference_id);
+                result.User.Reference_id);
 
             return Ok(userResponse);
         }
