@@ -17,9 +17,12 @@
         @if(email.touched && email.errors?.['required']){
         <p>Email is required</p>
         }
-        @if (email.touched && email.errors?.['email']) {
+        @if (email.touched && email.errors?.['email'] || email.touched && email.errors?.['invalidPublicDomain']) {
         <p>Please enter a valid email address.</p>
         }
+        <!--@if (email.touched && email.errors?.['invalidPublicDomain']) {
+  <p>Please enter a valid email domain format.</p>
+  }-->
       </div>
 
       <div class="form-group">

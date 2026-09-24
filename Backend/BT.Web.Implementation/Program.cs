@@ -1,11 +1,18 @@
 using BT.Implementation.Providers.ADO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using BT.Implementation.Providers;
 using BT.Implementation;
 using BT;
 using Serilog;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+//builder.Configuration["Jwt:Key"];
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -36,6 +43,33 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme
+)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(
+                builder.Configuration["Jwt:Key"]!
+            )
+        ),
+
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+
+        ValidateLifetime = true,
+
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,6 +83,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularApp");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

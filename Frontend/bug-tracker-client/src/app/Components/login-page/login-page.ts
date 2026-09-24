@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl,ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, shareReplay, tap } from 'rxjs/operators';
 import { LoginPageService, User } from '../../Services/login-page-service';
+
 
 @Component({
   imports: [ReactiveFormsModule],
@@ -17,6 +19,7 @@ export class LoginPage {
   email = new FormControl('', [
     Validators.required,
     Validators.email,
+    this.publicEmailValidator
   ]);
   password = new FormControl('', [
     Validators.required,
@@ -32,6 +35,24 @@ export class LoginPage {
   errorMessage = '';
 
   constructor(private readonly loginService: LoginPageService, private readonly router: Router) { }
+
+  publicEmailValidator(control: AbstractControl): ValidationErrors | null {
+    const email = control.value;
+
+    if (!email) {
+      return null;
+    }
+
+    const domain = email.split('@')[1];
+
+    if (!domain || !domain.includes('.') || !/\.[a-zA-Z]{3,}$/.test(domain)) {
+      return {
+        invalidPublicDomain: true
+      };
+    }
+
+    return null;
+  }
 
   login() {
     if (this.loginForm.invalid) return;

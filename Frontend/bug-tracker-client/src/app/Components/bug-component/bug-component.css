@@ -1,443 +1,427 @@
 :host {
   display: block;
   width: 100%;
-}
 
-.jira-page {
-  width: 90%;
-  min-width: 90%;
-  margin: 0 auto;
-  padding: clamp(20px, 3vw, 40px) 0;
-  box-sizing: border-box;
-}
-
-/* =========================
+  .jira-page {
+    width: 90%;
+    min-width: 90%;
+    margin: 0 auto;
+    padding: clamp(20px, 3vw, 40px) 0;
+    box-sizing: border-box;
+  }
+  /* =========================
    TITLE
    ========================= */
 
-.title-section {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
-}
+  .title-section {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
 
-.title-area {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-  .title-area h1 {
+  .title-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 auto;
     min-width: 0;
+  }
+
+    .title-area h1 {
+      min-width: 0;
+      margin: 0;
+      overflow-wrap: break-word;
+    }
+
+    .title-area input {
+      flex: 1;
+      min-width: 200px;
+      width: 100%;
+      padding: 10px 12px;
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 600;
+      color: #172b4d;
+      border: 1px solid #4c9aff;
+      border-radius: 4px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+      .title-area input:focus {
+        border-color: #2684ff;
+      }
+    /* =========================
+   EDIT BUTTONS
+   ========================= */
+
+    .title-area button,
+    .field-header button,
+    .description > button {
+      flex-shrink: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px 7px;
+      border-radius: 4px;
+    }
+
+      .title-area button:hover,
+      .field-header button:hover,
+      .description > button:hover {
+        background: #ebecf0;
+      }
+  /* =========================
+   DELETE
+   ========================= */
+
+  .delete-button {
+    flex-shrink: 0;
+    min-width: 75px;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: #bf2600;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+    .delete-button:hover {
+      background: #ffebe6;
+    }
+  /* =========================
+   MAIN LAYOUT
+   ========================= */
+
+  .bug-layout {
+    width: 100%;
+    display: grid;
+    /* Main content gets most of the space */
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 320px);
+    gap: 32px;
+    align-items: start;
+  }
+  /* =========================
+   LEFT SIDE
+   ========================= */
+
+  .bug-main {
+    width: 100%;
+    min-width: 0;
+  }
+  /* =========================
+   DESCRIPTION / ACTIVITY
+   ========================= */
+
+  .description,
+  .activity {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    background: white;
+    border: 1px solid #dfe1e6;
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  /* =========================
+   DESCRIPTION
+   ========================= */
+
+  .field-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 16px;
+  }
+
+  .description h3,
+  .activity h3 {
     margin: 0;
+    font-size: 16px;
+    color: #172b4d;
+  }
+
+  .description p {
+    margin: 0;
+    line-height: 1.6;
     overflow-wrap: break-word;
   }
 
-  .title-area input {
-    flex: 1;
-    min-width: 200px;
+  .description textarea {
+    display: block;
     width: 100%;
-    padding: 10px 12px;
-    font-size: clamp(18px, 2vw, 24px);
-    font-weight: 600;
+    min-width: 0;
+    min-height: 160px;
+    box-sizing: border-box;
+    padding: 10px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
     color: #172b4d;
     border: 1px solid #4c9aff;
     border-radius: 4px;
     outline: none;
-    box-sizing: border-box;
   }
 
-    .title-area input:focus {
+    .description textarea:focus {
       border-color: #2684ff;
     }
-
   /* =========================
-   EDIT BUTTONS
-   ========================= */
-
-  .title-area button,
-  .field-header button,
-  .description > button {
-    flex-shrink: 0;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 18px;
-    padding: 4px 7px;
-    border-radius: 4px;
-  }
-
-    .title-area button:hover,
-    .field-header button:hover,
-    .description > button:hover {
-      background: #ebecf0;
-    }
-
-/* =========================
-   DELETE
-   ========================= */
-
-.delete-button {
-  flex-shrink: 0;
-  min-width: 75px;
-  padding: 9px 16px;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  color: #bf2600;
-  cursor: pointer;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-  .delete-button:hover {
-    background: #ffebe6;
-  }
-
-/* =========================
-   MAIN LAYOUT
-   ========================= */
-
-.bug-layout {
-  width: 100%;
-  display: grid;
-  /* Main content gets most of the space */
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 320px);
-  gap: 32px;
-  align-items: start;
-}
-
-/* =========================
-   LEFT SIDE
-   ========================= */
-
-.bug-main {
-  width: 100%;
-  min-width: 0;
-}
-
-/* =========================
-   DESCRIPTION / ACTIVITY
-   ========================= */
-
-.description,
-.activity {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  background: white;
-  border: 1px solid #dfe1e6;
-  border-radius: 6px;
-  padding: 24px;
-  margin-bottom: 20px;
-}
-
-/* =========================
-   DESCRIPTION
-   ========================= */
-
-.field-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 16px;
-}
-
-.description h3,
-.activity h3 {
-  margin: 0;
-  font-size: 16px;
-  color: #172b4d;
-}
-
-.description p {
-  margin: 0;
-  line-height: 1.6;
-  overflow-wrap: break-word;
-}
-
-.description textarea {
-  display: block;
-  width: 100%;
-  min-width: 0;
-  min-height: 160px;
-  box-sizing: border-box;
-  padding: 10px;
-  resize: vertical;
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #172b4d;
-  border: 1px solid #4c9aff;
-  border-radius: 4px;
-  outline: none;
-}
-
-  .description textarea:focus {
-    border-color: #2684ff;
-  }
-
-/* =========================
    SIDEBAR
    ========================= */
 
-.bug-sidebar {
-  width: 100%;
-  min-width: 280px;
-  box-sizing: border-box;
-  background: white;
-  border: 1px solid #dfe1e6;
-  border-radius: 6px;
-  padding: 0 20px;
-}
-
-.sidebar-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  min-height: 54px;
-  padding: 12px 0;
-  box-sizing: border-box;
-  border-bottom: 1px solid #ebecf0;
-}
-
-  .sidebar-section:last-child {
-    border-bottom: none;
-  }
-
-  .sidebar-section label {
-    color: #6b778c;
-    font-size: 13px;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-
-  .sidebar-section > div {
-    color: #172b4d;
-    font-size: 14px;
-    text-align: right;
-    min-width: 0;
-  }
-
-  /* =========================
-   DROPDOWNS
-   ========================= */
-
-  .sidebar-section select {
-    width: 150px;
-    min-width: 120px;
-    max-width: 65%;
-    padding: 7px 6px;
-    border: none;
-    background: transparent;
-    color: #172b4d;
-    font-size: 14px;
-    cursor: pointer;
-    outline: none;
-  }
-
-  /* =========================
-   ASSIGNEE
-   ========================= */
-
-  .sidebar-section .user {
-    display: inline-block;
-    max-width: 75%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-    .sidebar-section .user + button {
-      flex-shrink: 0;
-      display: inline-block;
-      margin-left: 4px;
-      padding: 4px 7px;
-      vertical-align: middle;
-    }
-
-/* =========================
-   USER SEARCH
-   ========================= */
-
-.assignee-search {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-}
-
-.sidebar-section input {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-  padding: 9px 10px;
-  border: 1px solid #dfe1e6;
-  border-radius: 4px;
-  font-size: 14px;
-  outline: none;
-}
-
-  .sidebar-section input:focus {
-    border-color: #2684ff;
-  }
-
-/* =========================
-   USER DROPDOWN
-   ========================= */
-
-.assignee-dropdown {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 3px);
-  z-index: 20;
-  max-height: 200px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #dfe1e6;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.user-option {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px 12px;
-  border-bottom: 1px solid #ebecf0;
-  background: white;
-  color: #172b4d;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-  .user-option:hover {
-    background: #deebff;
-  }
-
-/* =========================
-   TABLET
-   ========================= */
-
-@media (max-width: 1000px) {
-
-  .jira-page {
-    width: 90%;
-  }
-
-  .bug-layout {
-    grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 24px;
-  }
-
   .bug-sidebar {
+    width: 100%;
     min-width: 280px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .description,
-  .activity {
-    padding: 20px;
-  }
-}
-
-/* =========================
-   MOBILE
-   ========================= */
-
-@media (max-width: 700px) {
-
-  .jira-page {
-    width: 94%;
-    min-width: 94%;
-    padding: 20px 0;
-  }
-
-  .title-section {
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .title-area {
-    width: 100%;
-    flex-basis: 100%;
-  }
-
-    .title-area input {
-      min-width: 0;
-    }
-
-  .delete-button {
-    margin-left: auto;
-  }
-
-  .bug-layout {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .bug-sidebar {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .description,
-  .activity {
-    padding: 18px;
-  }
-}
-
-/* =========================
-   SMALL MOBILE
-   ========================= */
-
-@media (max-width: 400px) {
-
-  .jira-page {
-    width: 96%;
-    min-width: 96%;
-  }
-
-  .title-section {
-    gap: 10px;
-  }
-
-  .title-area h1 {
-    font-size: 20px;
-  }
-
-  .description,
-  .activity {
-    padding: 14px;
+    box-sizing: border-box;
+    background: white;
+    border: 1px solid #dfe1e6;
+    border-radius: 6px;
+    padding: 0 20px;
   }
 
   .sidebar-section {
-    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    min-height: 54px;
+    padding: 12px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ebecf0;
   }
 
-    .sidebar-section select {
-      width: 130px;
+    .sidebar-section:last-child {
+      border-bottom: none;
     }
-}
 
-/* =========================
+    .sidebar-section label {
+      color: #6b778c;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .sidebar-section > div {
+      color: #172b4d;
+      font-size: 14px;
+      text-align: right;
+      min-width: 0;
+    }
+    /* =========================
+   DROPDOWNS
+   ========================= */
+
+    .sidebar-section select {
+      width: 150px;
+      min-width: 120px;
+      max-width: 65%;
+      padding: 7px 6px;
+      border: none;
+      background: transparent;
+      color: #172b4d;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+    }
+    /* =========================
+   ASSIGNEE
+   ========================= */
+
+    .sidebar-section .user {
+      display: inline-block;
+      max-width: 75%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+      .sidebar-section .user + button {
+        flex-shrink: 0;
+        display: inline-block;
+        margin-left: 4px;
+        padding: 4px 7px;
+        vertical-align: middle;
+      }
+  /* =========================
+   USER SEARCH
+   ========================= */
+
+  .assignee-search {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sidebar-section input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+  }
+
+    .sidebar-section input:focus {
+      border-color: #2684ff;
+    }
+  /* =========================
+   USER DROPDOWN
+   ========================= */
+
+  .assignee-dropdown {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 3px);
+    z-index: 20;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .user-option {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-bottom: 1px solid #ebecf0;
+    background: white;
+    color: #172b4d;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+    .user-option:hover {
+      background: #deebff;
+    }
+  /* =========================
+   TABLET
+   ========================= */
+
+  @media (max-width: 1000px) {
+
+    .jira-page {
+      width: 90%;
+    }
+
+    .bug-layout {
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 24px;
+    }
+
+    .bug-sidebar {
+      min-width: 280px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .description,
+    .activity {
+      padding: 20px;
+    }
+  }
+  /* =========================
+   MOBILE
+   ========================= */
+
+  @media (max-width: 700px) {
+
+    .jira-page {
+      width: 94%;
+      min-width: 94%;
+      padding: 20px 0;
+    }
+
+    .title-section {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .title-area {
+      width: 100%;
+      flex-basis: 100%;
+    }
+
+      .title-area input {
+        min-width: 0;
+      }
+
+    .delete-button {
+      margin-left: auto;
+    }
+
+    .bug-layout {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .bug-sidebar {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .description,
+    .activity {
+      padding: 18px;
+    }
+  }
+  /* =========================
+   SMALL MOBILE
+   ========================= */
+
+  @media (max-width: 400px) {
+
+    .jira-page {
+      width: 96%;
+      min-width: 96%;
+    }
+
+    .title-section {
+      gap: 10px;
+    }
+
+    .title-area h1 {
+      font-size: 20px;
+    }
+
+    .description,
+    .activity {
+      padding: 14px;
+    }
+
+    .sidebar-section {
+      gap: 8px;
+    }
+
+      .sidebar-section select {
+        width: 130px;
+      }
+  }
+  /* =========================
    COMMENTS
    ========================= */
 
-.comments-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-  .comments-header h3 {
-    margin: 0;
+  .comments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
   }
+
+    .comments-header h3 {
+      margin: 0;
+    }
+}
