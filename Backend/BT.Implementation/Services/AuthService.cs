@@ -76,7 +76,7 @@ public class AuthService : IAuthService
         }
     }
 
-    public Users? CreateUser(string username, string mail, string password)
+    public Users? CreateUser(string username, string mail, string password,string role)
     {
         _logger.LogInformation(
             "Starting user registration for {Mail}.", mail);
@@ -86,7 +86,7 @@ public class AuthService : IAuthService
 
             string hashedPassword = hasher.HashPassword(null!, password);
           
-            Users? user = _authProvider.CreateUser(username, mail, hashedPassword);
+            Users? user = _authProvider.CreateUser(username, mail, hashedPassword,role);
 
             if (user == null)
             {

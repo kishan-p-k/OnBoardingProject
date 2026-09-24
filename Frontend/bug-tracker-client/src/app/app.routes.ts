@@ -6,7 +6,8 @@ import { UserBugsComponent } from './Components/user-bugs/user-bugs';
 import { CreateBugComponent } from './Components/create-bug/create-bug';
 import { authGuard } from './auth-guard'
 import { CreateUser } from './Components/create-user/create-user';
-import { Profile } from './Components/profile/profile'; 
+import { Profile } from './Components/profile/profile';
+import { Admin } from './Components/admin/admin';
 
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'bug', component: BugListComponent, canActivate: [authGuard] },
 
   { path: 'userbugs/:ref_id', component: UserBugsComponent, canActivate: [authGuard] },
+  { path: 'admin', component: Admin, canActivate: [authGuard] },
 
   { path: '**', redirectTo: '/login', pathMatch: 'full' }
 

@@ -1,11 +1,14 @@
 <section class="bug-list-container">
   <app-navigation></app-navigation>
+  <div class="header-section">
+  <h1>Hello, {{user?.username}}</h1>
+
   <div class="bug-actions">
     <button (click)="ViewAllBugs()">All Bugs</button>
     <button (click)="AddBugs()">New Bug</button>
   </div>
+    </div>
 
-  <h1>Hello, {{user?.username}}</h1>
   <div class="bug-filter">
     <app-filter-box [reference_id]="user?.reference_id ?? null"
                     [resetFilter]="true"

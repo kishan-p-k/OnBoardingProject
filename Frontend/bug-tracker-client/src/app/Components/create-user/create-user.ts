@@ -28,12 +28,16 @@ export class CreateUser {
     Validators.required,
     Validators.minLength(8)
   ]);
+  role = new FormControl('', [
+    Validators.required
+  ]);
   registerForm = new FormGroup(
     {
     username: this.username,
     email: this.email,
     newPassword: this.newPassword,
-    confirmPassword: this.confirmPassword
+    confirmPassword: this.confirmPassword,
+    role: this.role
     },
     {
       validators: this.passwordMatchValidator
@@ -63,11 +67,12 @@ export class CreateUser {
     const username = this.username.value ?? '';
     const email = this.email.value ?? '';
     const password = this.newPassword.value ?? '';
+    const role = this.role.value ?? '';
 
-    this.loginService.register(username, email, password).pipe(
+    this.loginService.register(username, email, password, role).pipe(
       tap((user) => {
         this.loginService.setCurrentUser(user);
-        this.router.navigate(['/userbugs', user?.reference_id]);
+        this.router.navigate(['/admin']);
       }),
       catchError((error) => {
         console.error('Registration error:', error);

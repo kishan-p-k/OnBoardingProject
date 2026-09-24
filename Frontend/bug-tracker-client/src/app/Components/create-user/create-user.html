@@ -12,7 +12,7 @@
         <input type="text"
                id="username"
                name="username"
-               placeholder="Enter your username"
+               placeholder="Enter username"
                formControlName="username" />
         @if(username.touched && username.errors?.['required']){
         <p>Username is required</p>
@@ -25,7 +25,7 @@
         <input type="email"
                id="email"
                name="email"
-               placeholder="Enter your email"
+               placeholder="Enter email"
                formControlName="email" />
         @if(email.touched && email.errors?.['required']){
         <p>Email is required</p>
@@ -41,7 +41,7 @@
         <input type="password"
                id="newPassword"
                name="newPassword"
-               placeholder="Enter your password"
+               placeholder="Enter password"
                formControlName="newPassword" />
         @if (newPassword.touched && newPassword.errors?.['required']) {
         <p>Password is required.</p>
@@ -73,7 +73,18 @@
         }
 
       </div>
+      <div class="form-group">
+        <label for="role">Role</label>
+        <label class="radio-option">
+          <input type="radio" name="role" value="Developer"formControlName="role">
+          Developer
+        </label>
 
+        <label class="radio-option">
+          <input type="radio" name="role" value="Tester"formControlName="role">
+          Tester
+        </label>
+      </div>
       <button type="submit" [disabled]="registerForm.invalid"> Register </button>
 
     </form>

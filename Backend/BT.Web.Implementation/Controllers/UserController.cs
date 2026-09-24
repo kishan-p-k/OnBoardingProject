@@ -17,6 +17,26 @@ public class UserController : ControllerBase
         _userService = userService;
         _logger = logger;
     }
+    [HttpGet]
+    public List<UserRequestModel> GetAllUsers()
+    {
+        _logger.LogInformation(
+            "GET request received for all users.");
+        try
+        {
+            List<UserRequestModel> users = _userService.GetAllUsers();
+            _logger.LogInformation(
+                "Returning {UserCount} users.", users.Count);
+            return users;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error while processing GET users.");
+            return new List<UserRequestModel>();
+        }
+    }
     [HttpGet("{value}")]
     public async Task<List<string>> UserString(string value)
     {

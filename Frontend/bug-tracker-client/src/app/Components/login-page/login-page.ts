@@ -66,8 +66,11 @@ export class LoginPage {
         console.log('Login successful:', user);
 
         this.loginService.setCurrentUser(user);
-
-        this.router.navigate(['/userbugs', user?.reference_id]);
+        if (user?.role === 'Admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/userbugs', user?.reference_id]);
+        }
       }),
       
       catchError((error) => {

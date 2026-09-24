@@ -6,5 +6,5 @@ public interface IAuthService
 {
     public UserRequestModel? GetUserForLogin(string username, string password);
 
-    public Users? CreateUser(string username, string mail, string password);
+    public Users? CreateUser(string username, string mail, string password, string role);
 }
