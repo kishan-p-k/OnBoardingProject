@@ -38,7 +38,8 @@ public class AuthController : ControllerBase,IAuthController
             {
                 Reference_id = user.Reference_id,
                 Username = user.Username,
-                Mail = user.Mail
+                Mail = user.Mail,
+                role = user.role
             };
 
             _logger.LogInformation(
@@ -82,7 +83,8 @@ public class AuthController : ControllerBase,IAuthController
             {
                 user.Reference_id,
                 user.Username,
-                user.Mail
+                user.Mail,
+                user.role
             };
 
             _logger.LogInformation(

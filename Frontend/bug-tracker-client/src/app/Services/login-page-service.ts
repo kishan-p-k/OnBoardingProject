@@ -6,6 +6,7 @@ export interface User {
   reference_id: string;
   username: string;
   mail: string;
+  role: string;
 }
 
 @Injectable({

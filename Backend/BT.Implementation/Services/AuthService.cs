@@ -63,7 +63,8 @@ public class AuthService : IAuthService
             {
                 Reference_id = user.Reference_id,
                 Username = user.Username,
-                Mail = user.Mail
+                Mail = user.Mail,
+                role = user.role
             };
         }
         catch (Exception ex)

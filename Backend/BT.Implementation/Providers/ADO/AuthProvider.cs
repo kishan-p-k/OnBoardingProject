@@ -51,7 +51,8 @@ public class AuthProvider : IAuthProvider
                         Reference_id = reader["reference_id"].ToString(),
                         Username = reader["username"].ToString(),
                         Password = reader["password"].ToString(),
-                        Mail = reader["mail"].ToString()
+                        Mail = reader["mail"].ToString(),
+                        role = reader["role"].ToString()
                     };
                     _logger.LogInformation(
                 "Successfully retrieved UserInfo users from the database.");

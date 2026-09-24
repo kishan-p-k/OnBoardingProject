@@ -45,7 +45,7 @@ export class LoginPage {
 
     const domain = email.split('@')[1];
 
-    if (!domain || !domain.includes('.') || !/\.[a-zA-Z]{3,}$/.test(domain)) {
+    if (!domain || !domain.includes('.') || !/\.[a-zA-Z]{2,}$/.test(domain)) {
       return {
         invalidPublicDomain: true
       };

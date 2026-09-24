@@ -12,8 +12,8 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 
-//builder.Configuration["Jwt:Key"];
-// Add services to the container.
+////builder.Configuration["Jwt:Key"];
+//// Add services to the container.
 builder.Services.AddControllers();
 
 // Add OpenAPI/Swagger support
@@ -43,32 +43,32 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAuthentication(
-    JwtBearerDefaults.AuthenticationScheme
-)
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
+//builder.Services.AddAuthentication(
+//    JwtBearerDefaults.AuthenticationScheme
+//)
+//.AddJwtBearer(options =>
+//{
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuerSigningKey = true,
 
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(
-                builder.Configuration["Jwt:Key"]!
-            )
-        ),
+//        IssuerSigningKey = new SymmetricSecurityKey(
+//            Encoding.UTF8.GetBytes(
+//                builder.Configuration["Jwt:Key"]!
+//            )
+//        ),
 
-        ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//        ValidateIssuer = true,
+//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
 
-        ValidateAudience = true,
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+//        ValidateAudience = true,
+//        ValidAudience = builder.Configuration["Jwt:Audience"],
 
-        ValidateLifetime = true,
+//        ValidateLifetime = true,
 
-        ClockSkew = TimeSpan.Zero
-    };
-});
+//        ClockSkew = TimeSpan.Zero
+//    };
+//});
 
 var app = builder.Build();
 
@@ -83,8 +83,8 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularApp");
 
-app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthentication();
+//app.UseAuthorization();
 
 app.MapControllers();
 
