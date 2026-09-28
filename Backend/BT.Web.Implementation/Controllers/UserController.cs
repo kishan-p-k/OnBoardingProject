@@ -1,11 +1,13 @@
 using BT.Models;
 using BT;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
 [Route("users")]
+[Authorize]
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;

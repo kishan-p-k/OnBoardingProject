@@ -1,11 +1,13 @@
 using BT.Models;
 using BT;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
 [Route("comment")]
+[Authorize]
 public class CommentController : ControllerBase, ICommentController
 {
     private readonly ICommentService _commentService;

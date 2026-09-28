@@ -2,6 +2,10 @@ using BT.Models;
 using BT;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace BT.Web.Implementation.Controllers;
 
@@ -24,6 +28,10 @@ public class UserBugsController : ControllerBase
     {
         _logger.LogInformation(
             "GET request received for bugs reported by user with ID {ReferenceId}.", ReferenceId);
+        Console.WriteLine("========== USERBUGS HIT ==========");
+
+        _logger.LogInformation("========== USERBUGS LOGGER HIT ==========");
+
         try
         {
             List<Bug> userBugs = _userBugsService.GetUserBugs(ReferenceId);

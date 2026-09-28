@@ -1,11 +1,13 @@
 using BT.Models;
 using BT;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
 [Route("bugs")]
+[Authorize]
 public class BugController : ControllerBase
 {
     private readonly IBugService _bugService;

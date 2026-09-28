@@ -2,6 +2,8 @@ using BT.Models;
 using BT;
 using Microsoft.AspNetCore.Mvc;
 using BT.Web;
+using Microsoft.AspNetCore.Authorization;
+
 namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
@@ -27,7 +29,6 @@ public class AuthController : ControllerBase,IAuthController
         try
         {
             LoginResponseModel? loginResponse = _authService.GetUserForLogin(request.Mail, request.Password);
-
             if (loginResponse == null)
             {
                 return Conflict("Invalid username or password.");
@@ -51,7 +52,7 @@ public class AuthController : ControllerBase,IAuthController
                 "An unexpected error occurred.");
         }
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpPost("register")]
     public IActionResult CreateUser([FromBody] Users request)
     {

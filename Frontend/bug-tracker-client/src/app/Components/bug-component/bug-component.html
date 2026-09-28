@@ -113,7 +113,7 @@
         <select [value]="bug.status"
                 (change)="fieldChanged($event, bug.reference_id, 'status')">
 
-          @for (status of getValidStatuses(bug.status); track status) {
+          @for (status of getValidStatuses(bug.status,bug.assignee); track status) {
           <option [value]="status">{{ status }}</option>
           }
 

@@ -1,11 +1,13 @@
 using BT.Models;
 using BT;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BT.Web.Implementation.Controllers;
 
 [ApiController]
 [Route("bug")]
+[Authorize]
 public class BugDetailsController : ControllerBase
 {
     private readonly IBugDetailService _bugDetailService;
@@ -18,13 +20,12 @@ public class BugDetailsController : ControllerBase
         _bugDetailService = bugDetailService;
         _logger = logger;
     }
-
+    [Authorize]
     [HttpGet("{ref_id}")]
     public Bug? GetBugById(string ref_id)
     {
         _logger.LogInformation(
             "GET request received for bug with ID {ref_id}.", ref_id);
-
         try
         {
             Bug? bug = _bugDetailService.GetBugById(ref_id);

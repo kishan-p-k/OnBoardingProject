@@ -41,18 +41,32 @@ namespace BT.Implementation.Services
                 throw;
             }
         }
-        public List<Bug> FilterBugs(BugFilter filter)
+        public List<Bug> FilterBugs(BugFilter filter,string role)
         {
             _logger.LogInformation(
                 "Filtering bugs with criteria: {@Filter}.", filter);
             try
             {
+
+                if(filter.Status != null && (filter.Status=="Closed" || filter.Status=="Resolved") && role == "Developer")
+                {
+                    _logger.LogInformation(
+                        "Developer role detected. Overriding status filter to include only 'Open' and 'In Progress' bugs.");
+                    throw new UnauthorizedAccessException("Developers are not allowed to filter bugs with status 'Closed' or 'Resolved'.");
+                }
                 List<Bug> filteredBugs = _bugProvider.FilterBugs(filter);
                 _logger.LogInformation(
                     "Successfully filtered bugs. Count: {Count}.",
                     filteredBugs.Count);
 
                 return filteredBugs;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _logger.LogWarning(
+                    ex,
+                    "Unauthorized access attempt while filtering bugs with criteria: {@Filter}.", filter);
+                throw;
             }
             catch (Exception ex)
             {
