@@ -308,10 +308,8 @@ export class BugComponent {
   }
 
   clearSearch(): void {
-
     this.assigneeControl.setValue('', { emitEvent: false });
     this.showAssigneeDropdown = false;
-
   }
 
   bug$ = merge(
@@ -337,24 +335,26 @@ export class BugComponent {
     this.updatedBug$
 
   );
-  getValidStatuses(currentStatus: string): string[] {
+  getValidStatuses(currentStatus: string, currentAssignee: string): string[] {
     if (this.role === 'Developer') {
       switch (currentStatus) {
         case 'Open':
           return ['Open', 'In Progress'];
 
         case 'In Progress':
-          return ['In Progress', 'Resolved'];
+          return ['In Progress', 'Open'];
 
         default:
           return [currentStatus];
       }
     }
+    console.log("Current Assignee: ", currentAssignee);
+    console.log("Current User: ", this.loginPageService.getCurrentUser()?.username);
 
-    if (this.role === 'Tester') {
+    if (this.role === 'Tester' && this.loginPageService.getCurrentUser()?.username == currentAssignee) {
       switch (currentStatus) {
-        case 'Resolved':
-          return ['Resolved', 'Closed'];
+        case 'In Progress':
+          return ['In Progress', 'Resolved', 'Close'];
 
         case 'Closed':
           return ['Closed', 'Open'];

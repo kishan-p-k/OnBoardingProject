@@ -5,5 +5,5 @@ namespace BT.Web;
 
 public interface IBugFilterController
 {
-    List<Bug> FilterBugs(BugFilter filter);
+    IActionResult FilterBugs(BugFilter filter);
 }
