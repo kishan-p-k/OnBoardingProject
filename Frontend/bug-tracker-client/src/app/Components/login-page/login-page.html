@@ -21,8 +21,8 @@
         <p>Please enter a valid email address.</p>
         }
         <!--@if (email.touched && email.errors?.['invalidPublicDomain']) {
-  <p>Please enter a valid email domain format.</p>
-  }-->
+    <p>Please enter a valid email domain format.</p>
+    }-->
       </div>
 
       <div class="form-group">
@@ -41,6 +41,9 @@
         <p>Password must be at least 8 characters.</p>
         }
       </div>
+      @if (errorMessage) {
+      <p class="error-message">{{ errorMessage }}</p>
+      }
       <button type="submit" [disabled]="loginForm.invalid"> Login </button>
 
       <div class="signup-option">

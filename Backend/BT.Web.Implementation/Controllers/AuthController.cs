@@ -19,7 +19,7 @@ public class AuthController : ControllerBase,IAuthController
     }
 
     [HttpPost("login")]
-    public LoginResponseModel? Login([FromBody] Users request)
+    public IActionResult Login([FromBody] Users request)
     {
         _logger.LogInformation(
             "POST request received for user login.");
@@ -30,14 +30,14 @@ public class AuthController : ControllerBase,IAuthController
 
             if (loginResponse == null)
             {
-                return null;
+                return Conflict("Invalid username or password.");
             }
 
             _logger.LogInformation(
                 "Successfully authenticated user {Reference_id}.",
                 loginResponse.User.Reference_id);
 
-            return loginResponse;
+            return Ok(loginResponse);
         }
         catch (Exception ex)
         {
@@ -46,7 +46,9 @@ public class AuthController : ControllerBase,IAuthController
                 "Unexpected error while processing GET /userauth/{Mail}.",
                 request.Mail);
 
-            return null;
+            return StatusCode(
+                StatusCodes.Status500InternalServerError,
+                "An unexpected error occurred.");
         }
     }
 

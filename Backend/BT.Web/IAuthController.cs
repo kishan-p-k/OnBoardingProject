@@ -5,7 +5,7 @@ namespace BT.Web;
 
 public interface IAuthController
 {
-    LoginResponseModel? Login(Users request);
+    IActionResult Login(Users request);
 
     IActionResult CreateUser(Users request);
 }

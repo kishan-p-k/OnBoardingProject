@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import {
   FormControl, FormGroup, ReactiveFormsModule, Validators, AbstractControl,ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -34,7 +34,7 @@ export class LoginPage {
   user$: Observable<LoginResponse | null> | null = null;
   errorMessage = '';
 
-  constructor(private readonly loginService: LoginPageService, private readonly router: Router) { }
+  constructor(private readonly loginService: LoginPageService, private readonly router: Router, private readonly cdr: ChangeDetectorRef){ }
 
   publicEmailValidator(control: AbstractControl): ValidationErrors | null {
     const email = control.value;
@@ -78,7 +78,9 @@ export class LoginPage {
       
       catchError((error) => {
         console.error('Login error:', error);
-        this.errorMessage = 'Failed to login. Please check your credentials.';
+        //this.errorMessage = 'Failed to login. Please check your credentials.';
+        this.errorMessage = error.error;
+        this.cdr.detectChanges();
         return of(null);
       }),
       shareReplay(1)

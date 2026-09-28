@@ -92,4 +92,14 @@
       width: auto;
       padding: 10px;
     }
+
+  .error-message {
+    color: #dc2626;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
 }
