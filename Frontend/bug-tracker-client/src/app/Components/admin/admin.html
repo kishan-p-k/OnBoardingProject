@@ -25,7 +25,7 @@
 
     @for (user of users;track user.reference_id) {
 
-    <a class="user-component">
+    <a class="user-component" [routerLink]="['/userbugs', user.reference_id]">
 
       <div class="user-component-header">
         <span class="user-title">

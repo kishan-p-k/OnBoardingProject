@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { Navigation } from '../navigation/navigation';
-import { Router } from '@angular/router';
+import { Router,  RouterLink } from '@angular/router';
 import { User, AdminService } from '../../Services/admin.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from "@angular/common"; 
 
 
 @Component({
-  imports: [Navigation, AsyncPipe],
+  imports: [Navigation, AsyncPipe, RouterLink],
   selector: 'app-admin',
   styleUrl: './admin.css',
   templateUrl: './admin.html',
