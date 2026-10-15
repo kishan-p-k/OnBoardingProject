@@ -2,19 +2,18 @@
 :host {
   display: block;
   width: 100%;
+  .bug-list-container {
+    width: 90%;
+    min-width: 90%;
+    margin: 0 auto;
+    padding: clamp(20px, 3vw, 40px) 0;
+    box-sizing: border-box;
+  }
 
   .header-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-
-  .bug-list-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 30px 40px;
-    box-sizing: border-box;
   }
   /* Top action buttons */
   .bug-actions {

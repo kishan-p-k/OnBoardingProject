@@ -49,12 +49,19 @@ export class UserBugsComponent implements OnInit {
   AddBugs(): void {
       this.router.navigate(['/bug/create']);
   }
-  applyFilter(filter: BugFilter):void {
+  applyFilter(filter: BugFilter): void {
     this.keyword = filter.keyword ?? '';
 
-    this.bugs$ = this.bugListService.filterBugs(filter);
+    this.bugs$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        const ref_id = params.get('ref_id');
 
-    console.log(filter);
+        return this.bugListService.filterBugs({
+          ...filter,
+          reference_id: ref_id
+        });
+      })
+    );
   }
 
 }

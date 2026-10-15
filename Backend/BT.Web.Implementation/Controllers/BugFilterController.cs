@@ -26,18 +26,9 @@ public class BugFilterController : ControllerBase, IBugFilterController
         _logger.LogInformation(
             "GET request received for filtering bugs.");
 
-        var username = User.FindFirst("Username")?.Value;
-        var referenceId = User.FindFirst("Reference_id")?.Value;
-        var mail = User.FindFirst("Mail")?.Value;
-        var role = User.FindFirst(ClaimTypes.Role)?.Value;
-
-        _logger.LogInformation(
-            "User details - Username: {username}, Reference_id: {referenceId}, Mail: {mail}, Role: {role}",
-            username, referenceId, mail, role);
-
         try
         {
-            List<Bug> filteredBugs = _bugService.FilterBugs(filter, role);
+            List<Bug> filteredBugs = _bugService.FilterBugs(filter);
 
             _logger.LogInformation(
                 "Successfully filtered bugs. Count: {Count}.",

@@ -73,13 +73,21 @@ public class BugDetailService : IBugDetailService
         }
     }
 
-        public Bug? UpdateBugField(string ref_id, string bugField, string bugValue)
+        public Bug? UpdateBugField(string ref_id, string bugField, string bugValue, string? role)
         {
             _logger.LogInformation(
                 "Updating bug with ID {ref_id}.", ref_id);
             try
             {
-                Bug? bug = _bugDetailProvider.UpdateBugField(ref_id,bugField,bugValue);
+            if (role == "Developer" &&
+                bugField == "Status" &&
+                (bugValue == "Closed" || bugValue == "Resolved"))
+            {
+                throw new UnauthorizedAccessException(
+                    "Developers cannot change bug status to Closed or Resolved.");
+            }
+
+            Bug? bug = _bugDetailProvider.UpdateBugField(ref_id,bugField,bugValue);
                 if (bug == null)
                 {
                     _logger.LogWarning(
@@ -92,6 +100,13 @@ public class BugDetailService : IBugDetailService
                 }
                 return bug;
             }
+            catch (UnauthorizedAccessException ex)
+        {
+            _logger.LogWarning(
+                ex,
+                "Unauthorized attempt to update bug with ID {ref_id}.", ref_id);
+            throw;
+        }
             catch (Exception ex)
             {
                 _logger.LogError(

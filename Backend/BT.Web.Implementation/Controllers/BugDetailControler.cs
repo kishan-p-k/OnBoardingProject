@@ -2,6 +2,7 @@ using BT.Models;
 using BT;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BT.Web.Implementation.Controllers;
 
@@ -99,12 +100,18 @@ public class BugDetailsController : ControllerBase
         _logger.LogInformation(
             "PUT request received for bug with ID {ref_id}.", ref_id);
 
+        var username = User.FindFirst("Username")?.Value;
+        var referenceId = User.FindFirst("Reference_id")?.Value;
+        var mail = User.FindFirst("Mail")?.Value;
+        var role = User.FindFirst(ClaimTypes.Role)?.Value;
         try
         {
+
             Bug? bug = _bugDetailService.UpdateBugField(
                 ref_id,
                 update.BugField,
-                update.BugValue);
+                update.BugValue,
+                role);
 
             _logger.LogInformation(
                 "Returning updated bug with ID {ref_id} to the client.", ref_id);

@@ -1,20 +1,19 @@
 <section class="bug-list-container">
   <app-navigation></app-navigation>
   <div class="header-section">
-  <h1>Hello, {{user?.username}}</h1>
+    <h1>Hello, {{user?.username}}</h1>
 
-  <div class="bug-actions">
-    <button (click)="ViewAllBugs()">All Bugs</button>
-    <button (click)="AddBugs()">New Bug</button>
-  </div>
+    <div class="bug-actions">
+      <button (click)="ViewAllBugs()">All Bugs</button>
+      <button (click)="AddBugs()">New Bug</button>
     </div>
+  </div>
 
   <div class="bug-filter">
     <app-filter-box [reference_id]="user?.reference_id ?? null"
                     [resetFilter]="true"
                     (filterChanged)="applyFilter($event)">
     </app-filter-box>
-    <h2>Your Bugs</h2>
 
   </div>
   @if (errorMessage) {
@@ -24,10 +23,16 @@
   @if (bugs$ | async; as bugs) {
 
   @if (bugs.length === 0 && !errorMessage) {
-  <p>No bugs found.</p>
+  <h1>No bugs found.</h1>
   }
-  @if
-  (bugs.length > 0)
+  @else{
+  @if(user?.username == "admin"){
+  <h2>Bugs assigned to {{ bugs.length > 0 ? bugs[0].assignee : 'you' }}</h2>
+  }
+  @else{
+      <h2>Your Bugs</h2>
+  }
+  @if (bugs.length > 0)
   {
 
   <div class="bug-grid">
@@ -45,6 +50,7 @@
     </a>
     }
   </div>
+  }
   }
   }
 </section>

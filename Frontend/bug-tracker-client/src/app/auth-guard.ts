@@ -16,7 +16,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (route.routeConfig?.path === 'userbugs/:ref_id') {
     const refId = route.paramMap.get('ref_id');
 
-    if (refId !== user.reference_id || user.role === 'Admin') {
+    if (refId !== user.reference_id && user.role != "Admin") {
       return router.createUrlTree(['/bug']);
     }
   }
