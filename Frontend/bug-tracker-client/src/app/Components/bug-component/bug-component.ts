@@ -174,9 +174,6 @@ export class BugComponent {
   }
 
 
-  // =========================
-  // OUTSIDE CLICK
-  // =========================
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -190,12 +187,8 @@ export class BugComponent {
     const componentElement =
       this.elementRef.nativeElement as HTMLElement;
 
-
-    // If the click happened anywhere inside
-    // the assignee search area, do nothing.
     const assigneeSearch =
       componentElement.querySelector('.assignee-search');
-
 
     if (
       assigneeSearch &&
@@ -205,15 +198,12 @@ export class BugComponent {
     }
 
 
-    // Otherwise hide the dropdown.
     this.showAssigneeDropdown = false;
 
   }
 
 
-  // =========================
-  // START EDITING
-  // =========================
+
 
   startEditing(field: string, value: string): void {
 
@@ -310,6 +300,8 @@ export class BugComponent {
   clearSearch(): void {
     this.assigneeControl.setValue('', { emitEvent: false });
     this.showAssigneeDropdown = false;
+    this.editingField = "";
+
   }
 
   bug$ = merge(
